@@ -3,8 +3,10 @@ import { useState, useEffect} from "react";
 import PropTypes from 'prop-types'
 import Test from "./test";
 import '../table.css'
+import Square from './label';
+import Hours from './hours';
 
-const Customtable = () => {
+const Customtable = ({courses}) => {
     const weekDaysStyle = {
         textAlign: 'center',
         display: 'inline-block',
@@ -16,12 +18,10 @@ const Customtable = () => {
         backgroundColor: '#373a47',
         color: 'white',
     }
-
-    const hoursStyle = {
-        marginRight: '-2%',
-    }
+    
     return(
-        <div style={{paddingTop: '0%'}}>
+        <div>
+            <Hours />
             <div style={{float:'right',
                 lineHeight:'350%',
                 marginRight: '2.5%',
@@ -29,34 +29,53 @@ const Customtable = () => {
                 width:'75%',
                 height: '91%',
                 textAlign: 'right'}}>
-                <ul style={{listStyle: "none", display:'grid'}}>
-                    <li>
-                        <ul>
-                            <li style={weekDaysStyle}>چهارشنبه</li>
-                            <li style={weekDaysStyle}>سه شنبه</li>
-                            <li style={weekDaysStyle}>دوشنبه</li>
-                            <li style={weekDaysStyle}>یکشنبه</li>
-                            <li style={weekDaysStyle}>شنبه</li>
-                        </ul>
-                    </li>
-                    <li style={hoursStyle}>7</li>
-                    <li style={hoursStyle}>8</li>
-                    <li style={hoursStyle}>9</li>
-                    <li style={hoursStyle}>10</li>
-                    <li style={hoursStyle}>11</li>
-                    <li style={hoursStyle}>12</li>
-                    <li style={hoursStyle}>13</li>
-                    <li style={hoursStyle}>14</li>
-                    <li style={hoursStyle}>15</li>
-                    <li style={hoursStyle}>16</li>
-                    <li style={hoursStyle}>17</li>
-                    <li style={hoursStyle}>18</li>
-                    <li style={hoursStyle}>19</li>
-                    <li style={hoursStyle}>20</li>
+                <ul>
+                    <li style={weekDaysStyle}>چهارشنبه</li>
+                    <li style={weekDaysStyle}>سه شنبه</li>
+                    <li style={weekDaysStyle}>دوشنبه</li>
+                    <li style={weekDaysStyle}>یکشنبه</li>
+                    <li style={weekDaysStyle}>شنبه</li>
                 </ul>
-            </div>
+                
+                {courses.map(courseItem => <Square key={courseItem.id} course={courseItem} />)}
+            </div>           
         </div>
     )
+}
+
+Customtable.prototype = {
+  courses: PropTypes.object,
+}
+
+Customtable.defaultProps = {
+  courses: [{
+    value: '',
+    id: '',
+    label: '',
+    user: '',
+    college: '',
+    ws: '',
+    examDate: '',
+    title: '',
+    professor: '',
+    group: '',
+    unit: '',
+    code: '',
+    capacity: '',
+    requirement: '',
+    synthesis: '',
+    ps: '',
+    edId: '',
+    date: '',
+    start: '',
+    wsId: '',
+    day1: '',
+    time1: '',
+    start1: '',
+    day2: '',
+    time2: '',
+    start2: '',
+  }]
 }
 
 export default Customtable;

@@ -8,10 +8,10 @@ import Square from './label';
 const Courses = ({courses}) => {
   // console.log('courses :', courses);
   return(
-    <div>
+    <>
       {/* {courses.map(course => console.log('course :', course))} */}
       {courses.map(courseItem => <Square key={courseItem.id} course={courseItem} />)}
-    </div>
+    </>
   )
 }
 

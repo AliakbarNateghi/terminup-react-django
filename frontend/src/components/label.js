@@ -6,21 +6,23 @@ import {FaTimes} from 'react-icons/all';
 const Square = ({course}) => {
     // console.log('course in square :', course);
 
-    let h1 = 50 * course.time1
-    let s1 = (course.start1 - 7) * 7
-    let d1 = course.day1 * 15
+    let h1 = 7 * course.time1
+    let s1 = (course.start1 - 7) * 7 + 8
+    let d1 = course.day1 * 30
     if(course.day2 != null) {
         let h2 = 7 * course.time2
         let s2 = (course.start2 - 7) * 7
         let d2 = course.day2 * 15
         // console.log('course :', course);
         return (
-            <div>
+            <>
                 <div style={{backgroundColor: 'lightGreen',
                             border: '1px solid black',
-                            width: '15%',
-                            height: `${h1}px`,
-                            marrginTop: `${s1}%`}}>
+                            width: '20%',
+                            height: `${h1}%`,
+                            Top: `${s1}px`,
+                            // marginLeft: `${d1}px`
+                            }}>
                     <h3>
                         {course.title}
                         <FaTimes style={{color: 'red', cursor: 'pointer' }}/>
@@ -32,35 +34,27 @@ const Square = ({course}) => {
                         <FaTimes style={{color: 'red', cursor: 'pointer' }}/>
                     </h3>
                 </div> */}
-            </div>
-        )
-    }else{
-        return (
-            <div>
-                
-            </div>
+            </>
         )
     }
+    // else{
+    //     return (
+    //         <div>
+    //             <div style={{backgroundColor: 'lightGreen',
+    //                         border: '1px solid black',
+    //                         width: '15%',
+    //                         height: `${h1}px`,
+    //                         marrginTop: `${s1}%`}}>
+    //                 <h3>
+    //                     {course.title}
+    //                     <FaTimes style={{color: 'red', cursor: 'pointer' }}/>
+    //                 </h3>
+    //             </div>
+    //         </div>
+    //     )
+    // }
 }
 
-{/* <div style={{
-            width: '15%',
-            height: `${h1}%`,
-            marginTop: `${s1}%`,
-            marginRight: `${d1}%`,
-            backgroundColor: 'cyan',
-            }}>
-                course.day1
-</div>
-<div style={{
-            width: '15%',
-            height: `${h2}%`,
-            marginTop: `${s2}%`,
-            marginRight: `${d2}%`,
-            backgroundColor: 'cyan',
-            }}>
-                course.day2
-</div> */}
 
 // Square.prototype = {
 //   course: PropTypes.object,

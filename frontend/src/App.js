@@ -213,10 +213,7 @@ function App() {
         />
       </div>
 
-      <div>
-        <Customtable/>
-        <Courses courses={courseChoised}/>
-      </div>
+      <Customtable courses={courseChoised}/>
 
       <div style={{width: '15%', marginLeft: '5%', paddingTop: '1%'}}>
         <Select
@@ -230,6 +227,8 @@ function App() {
           onChange={courseClick}
         />
       </div>
+
+        {/* <Courses courses={courseChoised}/> */}
 
     </div>
   );
