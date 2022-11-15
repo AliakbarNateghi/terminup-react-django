@@ -4,55 +4,71 @@ import PropTypes, { number } from 'prop-types';
 import {FaTimes} from 'react-icons/all';
 
 const Square = ({course}) => {
-    // console.log('course in square :', course);
+    // console.log('square :', course.start1);
 
-    let h1 = 7 * course.time1
-    let s1 = (course.start1 - 7) * 7 + 8
-    let d1 = course.day1 * 30
+    let h1 = 55.5 * course.time1
+    let s1 = (course.start1 - 7) * 56 - 1
+    let d1 = 60 - course.day1 * 15
     if(course.day2 != null) {
-        let h2 = 7 * course.time2
-        let s2 = (course.start2 - 7) * 7
-        let d2 = course.day2 * 15
+        let h2 = 55.5 * course.time2
+        let s2 = (course.start2 - 7) * 56 - 1
+        let d2 = 60- course.day2 * 15
         // console.log('course :', course);
         return (
             <>
-                <div style={{backgroundColor: 'lightGreen',
-                            border: '1px solid black',
-                            width: '20%',
-                            height: `${h1}%`,
-                            Top: `${s1}px`,
-                            // marginLeft: `${d1}px`
-                            }}>
+                <div style={{
+                    position: 'fixed',
+                    backgroundColor: 'lightGreen',
+                    border: '0.01px solid black',
+                    width: '15%',
+                    height: `${h1}px`,
+                    marginTop: `${s1}px`,
+                    marginLeft: `${d1}%`,
+                    borderRadius: '7px',
+                    }}>
                     <h3>
                         {course.title}
-                        <FaTimes style={{color: 'red', cursor: 'pointer' }}/>
+                        {/* <FaTimes style={{color: 'red', cursor: 'pointer' }}/> */}
                     </h3>
                 </div>
-                {/* <div>
+                <div style={{
+                    position: 'fixed',
+                    backgroundColor: 'lightGreen',
+                    border: '0.01px solid black',
+                    width: '15%',
+                    height: `${h2}px`,
+                    marginTop: `${s2}px`,
+                    marginLeft: `${d2}%`,
+                    borderRadius: '7px',
+                    }}>
                     <h3>
                         {course.title}
-                        <FaTimes style={{color: 'red', cursor: 'pointer' }}/>
+                        {/* <FaTimes style={{color: 'red', cursor: 'pointer' }}/> */}
                     </h3>
-                </div> */}
+                </div>
+            </>
+        )
+    }else{
+        return (
+            <>
+                <div style={{
+                    position: 'fixed',
+                    backgroundColor: 'lightGreen',
+                    border: '0.01px solid black',
+                    width: '15%',
+                    height: `${h1}px`,
+                    marginTop: `${s1}px`,
+                    marginLeft: `${d1}%`,
+                    borderRadius: '7px',
+                    }}>
+                    <h3>
+                        {course.title}
+                        {/* <FaTimes style={{color: 'red', cursor: 'pointer' }}/> */}
+                    </h3>
+                </div>
             </>
         )
     }
-    // else{
-    //     return (
-    //         <div>
-    //             <div style={{backgroundColor: 'lightGreen',
-    //                         border: '1px solid black',
-    //                         width: '15%',
-    //                         height: `${h1}px`,
-    //                         marrginTop: `${s1}%`}}>
-    //                 <h3>
-    //                     {course.title}
-    //                     <FaTimes style={{color: 'red', cursor: 'pointer' }}/>
-    //                 </h3>
-    //             </div>
-    //         </div>
-    //     )
-    // }
 }
 
 

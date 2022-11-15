@@ -141,28 +141,41 @@ function App() {
       return {value: collegeItem.id, label: collegeItem.college}
   })
 
-  let object1;
-  let object2;
-  let object3;
-  let object4;
   let courseOptions = choised.map( function (courseItem) {
-    ws.map((wsItem) => wsItem.id == courseItem.ws ? object2 = {
-      wsId: wsItem.id,
-      day1: wsItem.day1,
-      time1: wsItem.time1,
-      start1: wsItem.time1,
-      day2: wsItem.day2,
-      time2: wsItem.time2,
-      start2: wsItem.time2,
-    } : '');
 
-    ed.map((edItem) => edItem.id == courseItem.ed ? object3 = {
-      edId: edItem.id,
-      date: edItem.date,
-      start: edItem.start,
-    } : '');
+    let wsId;
+    let day1;
+    let time1;
+    let start1;
+    let day2;
+    let time2;
+    let start2;
+    let edId;
+    let date;
+    let start;
 
-    object1 = {
+    // ws.map((wsItem) => wsItem.id == courseItem.ws ? wsId = wsItem.id : '');
+    for(let i in ws) {
+      if(ws[i].id == courseItem.ws) {
+        wsId = ws[i].id;
+        day1 = ws[i].day1;
+        time1 = ws[i].time1;
+        start1 = ws[i].start1
+        day2 = ws[i].day2;
+        time2 = ws[i].time2;
+        start2 = ws[i].start2;
+      }
+    }
+
+    for(let i in ed) {
+      if(ed[i].id == courseItem.ed) {
+        edId = ed[i].id;
+        date = ed[i].date;
+        start = ed[i].start;
+      }
+    }
+
+    let object = {
       value: courseItem.id,
       id: courseItem.id,
       label: courseItem.title,
@@ -178,16 +191,20 @@ function App() {
       capacity: courseItem.capacity,
       requirements: courseItem.requirements,
       synthesis: courseItem.synthesis,
-      ps: courseItem.ps
+      ps: courseItem.ps,
+      edId: edId,
+      date: date,
+      start: start,
+      wsId: wsId,
+      day1: day1,
+      time1: time1,
+      start1: start1,
+      day2: day2,
+      time2: time2,
+      start2: start2,
     }
 
-    object4 = {
-      ...object1,
-      ...object2,
-      ...object3,
-    }
-
-    return object4
+    return object
   })
 
   const customStyles = {
@@ -227,8 +244,6 @@ function App() {
           onChange={courseClick}
         />
       </div>
-
-        {/* <Courses courses={courseChoised}/> */}
 
     </div>
   );

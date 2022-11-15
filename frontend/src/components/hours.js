@@ -1,26 +1,26 @@
 import React, { Component }  from 'react';
 import { useState, useEffect} from "react";
 import PropTypes from 'prop-types'
-import Test from "./test";
-import '../table.css'
-import Square from './label';
 
 const Hours = () => {
 
     const hoursStyle = {
-        // paddingRight: '-10%',
-        // width: '2%',
         float: 'right',
         marginRight: '20%',
     }
+
+    const ulStyle = {
+        listStyle: "none",
+        display:'grid',
+        float:'right',
+        marginRight: '1%',
+        paddingTop: '27.5px',
+        lineHeight:'350%',
+    }
     
     return (
-        <div style={{}}>
-            <ul style={{listStyle: "none",
-                        display:'grid',
-                        float:'right',
-                        paddingTop: '2.55%',
-                        lineHeight:'375%'}}>
+        <div>
+            <ul style={ulStyle}>
                 <li style={hoursStyle}>7</li>
                 <li style={hoursStyle}>8</li>
                 <li style={hoursStyle}>9</li>
@@ -38,7 +38,6 @@ const Hours = () => {
             </ul>
         </div>
     )
-    
 }
 
 export default Hours
