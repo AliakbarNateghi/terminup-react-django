@@ -9,6 +9,7 @@ import Course from "./components/course";
 import Courses from "./components/courses";
 import Sidebar from "./components/Sidebar";
 import 'react-hover'
+import Button from './components/buttons';
 
 import Select, {
   components,
@@ -34,7 +35,7 @@ import Customtable from "./components/table";
 
 function App() {
 
-  const animatedComponents = makeAnimated();
+  // const animatedComponents = makeAnimated();
 
   const initialCollege = [
       {
@@ -52,20 +53,33 @@ function App() {
 
     const initialCourse = [
       {
-        id: '',
-        user: '',
-        college: '',
-        ws: '',
-        examDate: '',
-        title: '',
-        professor: '',
-        group: '',
-        unit: '',
-        code: '',
-        capacity: '',
-        requirement: '',
-        synthesis: '',
-        ps: '',
+      value: '',
+      id: '',
+      label: '',
+      title: '',
+      college: '',
+      user: '',
+      ws: '',
+      examDate: '',
+      professor: '',
+      group: '',
+      unit: '',
+      code: '',
+      capacity: '',
+      requirements: '',
+      synthesis: '',
+      ps: '',
+      edId: '',
+      date: '',
+      start: '',
+      wsId: '',
+      day1: '',
+      time1: '',
+      start1: '',
+      day2: '',
+      time2: '',
+      start2: '',
+      color: false,
       }
   ]
 
@@ -95,9 +109,9 @@ function App() {
   const [course, setCourse] = useState(initialCourse)
   const [choised, setChoised] = useState(initialChoised)
   const [courseChoised, setCourseChoised] = useState(initialCourse)
-  const [isShown, setIsShown] = useState(false)
+
   let choosedCollege = []
-  let choosedCourse
+  let choosedCourse = []
 
   const onload = (e) => {
       e.preventDefault()
@@ -130,12 +144,16 @@ function App() {
     course.map(courseItem => event.value === courseItem.college ? choosedCollege.push(courseItem) : 'No founded course to show!')
     setChoised(choosedCollege)
   }
-
+    
   const courseClick = (event) => {
-      setCourseChoised(event);
+    setCourseChoised([...courseChoised, event]);
   }
 
-  // console.log('courseChoised :', courseChoised);
+  const deleteCourse = (id) => {
+    setCourseChoised(courseChoised.filter((course) => course.id !== id))
+  }
+
+  console.log('courseChoised :', courseChoised);
 
   let collegeOptions = college.map( function (collegeItem) {
       return {value: collegeItem.id, label: collegeItem.college}
@@ -202,6 +220,7 @@ function App() {
       day2: day2,
       time2: time2,
       start2: start2,
+      color: false,
     }
 
     return object
@@ -233,16 +252,32 @@ function App() {
       <Customtable courses={courseChoised}/>
 
       <div style={{width: '15%', marginLeft: '5%', paddingTop: '1%'}}>
-        <Select
-          closeMenuOnSelect={false}
-          components={animatedComponents}
-          // defaultValue={[]}
-          isMulti={true}
-          options={courseOptions}
-          placeholder={'دروس'}
-          styles={customStyles}
-          onChange={courseClick}
-        />
+        <div className='courses'>
+          {courseOptions.map((courseItem) => 
+            <Button key={courseItem.id}
+                  text={courseItem.title}
+                  onClick={() => courseClick(courseItem)}
+                  color={'steelblue'} 
+                  />
+            )}
+        </div>
+
+        <br></br>
+        <div>
+          <p>
+            :کلاس های انتخاب شده
+          </p>
+        </div>
+
+        <div className='courses'>
+          {courseChoised.map((courseItem) => 
+          <Button key={courseItem.id}
+                  text={courseItem.title}
+                  onClick={() => deleteCourse(courseItem.id)}
+                  color={'red'} 
+                  />
+            )}
+        </div>
       </div>
 
     </div>

@@ -8,9 +8,12 @@ import Hours from './hours';
 import Days from './days';
 import Border from './border';
 
+let xourses = []
+
 const Customtable = ({courses}) => {
   
   // console.log('courses :', courses)
+  // xourses.push(courses)
 
   const divStyle = {
     float:'right',
