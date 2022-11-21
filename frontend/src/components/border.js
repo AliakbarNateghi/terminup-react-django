@@ -2,8 +2,7 @@ import React, { Component }  from 'react';
 import { useState, useEffect} from "react";
 import PropTypes from 'prop-types'
 
-const Border = () =>
-{
+const Border = () => {
 
     const ulStyle = {
         listStyle: 'none',

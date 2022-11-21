@@ -3,8 +3,20 @@ import { useState, useEffect} from "react";
 import PropTypes, { number } from 'prop-types';
 import {FaTimes} from 'react-icons/all';
 
-const Square = ({course}) => {
-    // console.log('square :', course.start1);
+const Square = ({course, backgroundColor, onClickFa, onMouseOverFa}) => {
+
+    const [check, setCheck] = useState(false);
+
+    let mouseOver = false;
+    console.log('mouseOver :', mouseOver);
+
+    function onMouseOverSquare() {
+        setCheck(prevCheck => !prevCheck);
+    }
+
+    function onMouseOutSquare() {
+        setCheck(prevCheck => !prevCheck);
+    }
 
     const hThreeStyle = {
         textAlign: 'center',
@@ -44,12 +56,11 @@ const Square = ({course}) => {
                 LH2 = 200
             }
 
-            // console.log('course :', course);
             return (
-                <>
+                <div onMouseOver={onMouseOverSquare()} onMouseOut={onMouseOutSquare()}>
                     <div style={{
                         position: 'fixed',
-                        backgroundColor: 'lightGreen',
+                        backgroundColor: backgroundColor,
                         border: '0.01px solid black',
                         width: '15%',
                         height: `${h1}px`,
@@ -57,19 +68,20 @@ const Square = ({course}) => {
                         marginLeft: `${d1}%`,
                         borderRadius: '7px',
                         lineHeight: `${LH1}%`,
+                        cursor: 'pointer',
                         }}>
                         
                         <h4 style={hFourStyle}>{course.code}</h4>
                         <h3 style={hThreeStyle}>
                             {course.title}
-                            {/* <FaTimes style={{color: 'red', cursor: 'pointer' }}/> */}
+                            {check ? <FaTimes onMouseOver={onMouseOverFa} onClick={onClickFa} style={{color: 'red', cursor: 'pointer' }}/> : <></>}
                         </h3>
                         <h4 style={hFourStyle}>{course.professor}</h4>
 
                     </div>
                     <div style={{
                         position: 'fixed',
-                        backgroundColor: 'lightGreen',
+                        backgroundColor: backgroundColor,
                         border: '0.01px solid black',
                         width: '15%',
                         height: `${h2}px`,
@@ -77,24 +89,25 @@ const Square = ({course}) => {
                         marginLeft: `${d2}%`,
                         borderRadius: '7px',
                         lineHeight: `${LH2}%`,
+                        cursor: 'pointer',
                         }}>
 
                         <h4 style={hFourStyle}>{course.code}</h4>
                         <h3 style={hThreeStyle}>
                             {course.title}
-                            {/* <FaTimes style={{color: 'red', cursor: 'pointer' }}/> */}
+                            {check ? <FaTimes onMouseOver={onMouseOverFa} onClick={onClickFa} style={{color: 'red', cursor: 'pointer' }}/> : <></>}
                         </h3>
                         <h4 style={hFourStyle}>{course.professor}</h4>
                         
                     </div>
-                </>
+                </div>
             )
         }else{
             return (
                 <>
                     <div style={{
                         position: 'fixed',
-                        backgroundColor: 'lightGreen',
+                        backgroundColor: backgroundColor,
                         border: '0.01px solid black',
                         width: '15%',
                         height: `${h1}px`,
@@ -102,12 +115,13 @@ const Square = ({course}) => {
                         marginLeft: `${d1}%`,
                         borderRadius: '7px',
                         lineHeight: `${LH1}%`,
+                        cursor: 'pointer',
                         }}>
 
                         <h4 style={hFourStyle}>{course.code}</h4>
                         <h3 style={hThreeStyle}>
                             {course.title}
-                            {/* <FaTimes style={{color: 'red', cursor: 'pointer' }}/> */}
+                            {check ? <FaTimes onMouseOver={onMouseOverFa} onClick={onClickFa} style={{color: 'red', cursor: 'pointer' }}/> : ''}
                         </h3>
                         <h4 style={hFourStyle}>{course.professor}</h4>
 

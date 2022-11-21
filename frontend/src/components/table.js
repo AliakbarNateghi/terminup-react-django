@@ -8,12 +8,7 @@ import Hours from './hours';
 import Days from './days';
 import Border from './border';
 
-let xourses = []
-
-const Customtable = ({courses}) => {
-  
-  // console.log('courses :', courses)
-  // xourses.push(courses)
+const Customtable = ({courses, temporaryCourses, deleteCourses, onMouseOver}) => {
 
   const divStyle = {
     float:'right',
@@ -29,7 +24,10 @@ const Customtable = ({courses}) => {
         <Hours />
         <div style={divStyle}>  
             <Days />
-            {courses.map(courseItem => <Square key={courseItem.id} course={courseItem} />)}
+            {courses.map(courseItem => <Square key={courseItem.id} course={courseItem} backgroundColor={courseItem.color} onMouseOver={onMouseOver}/>)}
+            {/* 'rgba(52, 52, 52, 0.5)' */}
+            {temporaryCourses.map(courseItem => <Square key={courseItem.id} course={courseItem} backgroundColor={courseItem.color} onMouseOver={onMouseOver}/>)}
+            {deleteCourses.map(courseItem => <Square key={courseItem.id} course={courseItem} backgroundColor={courseItem.color} onMouseOver={onMouseOver}/>)}
             <Border />
         </div>           
       </>
@@ -38,37 +36,14 @@ const Customtable = ({courses}) => {
 
 Customtable.prototype = {
   courses: PropTypes.object,
+  temporaryCourses: PropTypes.object,
+  deleteCourses: PropTypes.object,
 }
 
 Customtable.defaultProps = {
-  courses: [{
-    value: '',
-    id: '',
-    label: '',
-    user: '',
-    college: '',
-    ws: '',
-    examDate: '',
-    title: '',
-    professor: '',
-    group: '',
-    unit: '',
-    code: '',
-    capacity: '',
-    requirement: '',
-    synthesis: '',
-    ps: '',
-    edId: '',
-    date: '',
-    start: '',
-    wsId: '',
-    day1: '',
-    time1: '',
-    start1: '',
-    day2: '',
-    time2: '',
-    start2: '',
-  }]
+  courses: [],
+  temporaryCourses: [],
+  deleteCourses: [],
 }
 
 export default Customtable;

@@ -20,34 +20,7 @@ Courses.prototype = {
 }
 
 Courses.defaultProps = {
-  courses: [{
-    value: '',
-    id: '',
-    label: '',
-    user: '',
-    college: '',
-    ws: '',
-    examDate: '',
-    title: '',
-    professor: '',
-    group: '',
-    unit: '',
-    code: '',
-    capacity: '',
-    requirement: '',
-    synthesis: '',
-    ps: '',
-    edId: '',
-    date: '',
-    start: '',
-    wsId: '',
-    day1: '',
-    time1: '',
-    start1: '',
-    day2: '',
-    time2: '',
-    start2: '',
-  }]
+  courses: [[]]
 }
 
 export default Courses;
