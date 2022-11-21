@@ -3,136 +3,48 @@ import Test from './components/test'
 import {useState, useEffect} from "react";
 import axios from "axios";
 import React, {component, CSSProperties, FunctionComponent} from 'react'
-import table from "./components/table";
 import College from "./components/college";
 import Course from "./components/course";
 import Courses from "./components/courses";
 import Sidebar from "./components/Sidebar";
 import 'react-hover'
 import Button from './components/buttons';
-
-import Select, {
-  components,
-  MultiValueGenericProps,
-  MultiValueProps,
-  OnChangeValue,
-  Props,
-} from 'react-select';
-
-import {
-  SortableContainer,
-  SortableContainerProps,
-  SortableElement,
-  SortEndHandler,
-  SortableHandle,
-} from 'react-sortable-hoc';
-
-import { CSSObject } from '@emotion/serialize';
-import { colourOptions, ColourOption } from './components/data';
-import makeAnimated from 'react-select/animated';
-import chroma from 'chroma-js';
+import Select from 'react-select';
 import Customtable from "./components/table";
 
 function App() {
 
-  // const animatedComponents = makeAnimated();
-
-  const initialCollege = [
-      {
-          value: '',
-          label: '',
-      }
-  ]
-
-  const initialChoised = [
-      {
-        id: '',
-        course: '',
-      }
-  ]
-
-    const initialCourse = [
-      {
-      value: '',
-      id: '',
-      label: '',
-      title: '',
-      college: '',
-      user: '',
-      ws: '',
-      examDate: '',
-      professor: '',
-      group: '',
-      unit: '',
-      code: '',
-      capacity: '',
-      requirements: '',
-      synthesis: '',
-      ps: '',
-      edId: '',
-      date: '',
-      start: '',
-      wsId: '',
-      day1: '',
-      time1: '',
-      start1: '',
-      day2: '',
-      time2: '',
-      start2: '',
-      color: false,
-      }
-  ]
-
-  const intialEd = [
-    {
-      id: '',
-      date: '',
-      start: '',
-    }
-  ]
-
-  const intialWs = [
-    {
-      id: '',
-      day1: '',
-      start1: '',
-      time1: '',
-      day2: '',
-      start2: '',
-      time2: '',
-    }
-  ]
-
-  const [college, setCollege] = useState(initialCollege)
-  const [ws, setWs] = useState(intialWs)
-  const [ed, setEd] = useState(intialEd)
-  const [course, setCourse] = useState(initialCourse)
-  const [choised, setChoised] = useState(initialChoised)
-  const [courseChoised, setCourseChoised] = useState(initialCourse)
+  const [college, setCollege] = useState([])
+  const [ws, setWs] = useState([])
+  const [ed, setEd] = useState([])
+  const [course, setCourse] = useState([])
+  const [choised, setChoised] = useState([])
+  const [courseChoised, setCourseChoised] = useState([])
+  const [temporaryChoised, setTemporaryChoised] = useState([])
+  const [deleteChoised, setDeleteChoised] = useState([])
 
   let choosedCollege = []
-  let choosedCourse = []
 
   const onload = (e) => {
-      e.preventDefault()
+      e.preventDefault();
   }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const collegeResult = await axios.get('http://127.0.0.1:8000/api/college-list/');
-                setCollege(collegeResult.data);
-                const courseResult = await axios.get('http://127.0.0.1:8000/api/course-list/');
-                setCourse(courseResult.data);
-                const wsResult = await axios.get('http://127.0.0.1:8000/api/ws-list/');
-                setWs(wsResult.data);
-                const edResult = await axios.get('http://127.0.0.1:8000/api/ed-list/');
-                setEd(edResult.data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        fetchData();
+  useEffect(() => {
+      const fetchData = async () => {
+          try {
+              const collegeResult = await axios.get('http://127.0.0.1:8000/api/college-list/');
+              setCollege(collegeResult.data);
+              const courseResult = await axios.get('http://127.0.0.1:8000/api/course-list/');
+              setCourse(courseResult.data);
+              const wsResult = await axios.get('http://127.0.0.1:8000/api/ws-list/');
+              setWs(wsResult.data);
+              const edResult = await axios.get('http://127.0.0.1:8000/api/ed-list/');
+              setEd(edResult.data);
+          } catch (err) {
+              console.log(err);
+          }
+      };
+      fetchData();
   }, []);
   // console.log('college :', college);
   // console.log('course :', course);
@@ -144,16 +56,42 @@ function App() {
     course.map(courseItem => event.value === courseItem.college ? choosedCollege.push(courseItem) : 'No founded course to show!')
     setChoised(choosedCollege)
   }
-    
+
   const courseClick = (event) => {
-    setCourseChoised([...courseChoised, event]);
+    event.color = 'lightgreen'
+    setCourseChoised([...courseChoised, event]); 
   }
 
-  const deleteCourse = (id) => {
-    setCourseChoised(courseChoised.filter((course) => course.id !== id))
+  const onMouseOverButton = (event) => {
+    event.color = 'gray'
+    setTemporaryChoised([...temporaryChoised, event]);
   }
 
-  console.log('courseChoised :', courseChoised);
+  const onMouseOverDelete = (event) => {
+    event.color = 'red'
+    setDeleteChoised([...deleteChoised, event]);
+  }
+
+  const onMouseOutButton = (event) => {
+    event.color = 'lightgreen'
+    setTemporaryChoised(temporaryChoised.filter((course) => course.id !== event.id))
+  }
+
+  const onMouseOutDelete = (event) => {
+    event.color = 'lightgreen'
+    setDeleteChoised(deleteChoised.filter((course) => course.id !== event.id))
+  }
+
+  const deleteCourse = (event) => {
+    event.color = 'lightgreen'
+    setCourseChoised(courseChoised.filter((course) => course.id !== event.id))
+  }
+
+  const onMouseOverLabel = (event) => {
+
+  }
+
+  // console.log('courseChoised :', courseChoised);
 
   let collegeOptions = college.map( function (collegeItem) {
       return {value: collegeItem.id, label: collegeItem.college}
@@ -172,7 +110,6 @@ function App() {
     let date;
     let start;
 
-    // ws.map((wsItem) => wsItem.id == courseItem.ws ? wsId = wsItem.id : '');
     for(let i in ws) {
       if(ws[i].id == courseItem.ws) {
         wsId = ws[i].id;
@@ -220,7 +157,8 @@ function App() {
       day2: day2,
       time2: time2,
       start2: start2,
-      color: false,
+      color: '',
+      choosed: false,
     }
 
     return object
@@ -249,34 +187,40 @@ function App() {
         />
       </div>
 
-      <Customtable courses={courseChoised}/>
+      <Customtable courses={courseChoised} temporaryCourses={temporaryChoised} deleteCourse={deleteChoised}/>
 
       <div style={{width: '15%', marginLeft: '5%', paddingTop: '1%'}}>
         <div className='courses'>
           {courseOptions.map((courseItem) => 
-            <Button key={courseItem.id}
-                  text={courseItem.title}
-                  onClick={() => courseClick(courseItem)}
-                  color={'steelblue'} 
-                  />
-            )}
+            {if(courseItem.id !== '') {
+              return <Button key={courseItem.id}
+                        text={courseItem.title}
+                        onClick={() => courseClick(courseItem)}
+                        color={'steelblue'} 
+                        onMouseOver={() => onMouseOverButton(courseItem)}
+                        onMouseOut={() => onMouseOutButton(courseItem)}
+                      />
+          }})}
         </div>
 
         <br></br>
+
         <div>
           <p>
             :کلاس های انتخاب شده
           </p>
         </div>
 
-        <div className='courses'>
+        <div>
           {courseChoised.map((courseItem) => 
-          <Button key={courseItem.id}
-                  text={courseItem.title}
-                  onClick={() => deleteCourse(courseItem.id)}
-                  color={'red'} 
-                  />
-            )}
+            <Button key={courseItem.id}
+              text={courseItem.title}
+              onClick={() => deleteCourse(courseItem)}
+              onMouseOver={() => onMouseOverDelete(courseItem)}
+              onMouseOut={() => onMouseOutDelete(courseItem)}
+              color={'red'}
+            />
+          )}
         </div>
       </div>
 
