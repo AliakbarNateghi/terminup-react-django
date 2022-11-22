@@ -3,11 +3,16 @@ import React, { Component }  from 'react';
 
 const Button = ({color, text, onClick, onMouseOver, onMouseOut}) =>
 {
-    return <button onClick={onClick}
+    return <div><button onClick={onClick}
                    className='btn'
-                   style={{backgroundColor: color, fontSize: '10px', fontStyle: ''}}
+                   style={{color: 'black',
+                           backgroundColor: color,
+                           fontSize: '10px',
+                           width: '95%',
+                           height: '8%',
+                           border: '0.01px solid black',}}
                    onMouseOver={onMouseOver}
-                   onMouseOut={onMouseOut}>{text}</button>
+                   onMouseOut={onMouseOut}>{text}</button></div>
 }
 
 Button.defaultProps = {

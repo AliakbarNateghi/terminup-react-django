@@ -1,20 +1,17 @@
 import React, { Component }  from 'react';
 import { useState, useEffect} from "react";
-import PropTypes, { number } from 'prop-types';
+import PropTypes, { func, number } from 'prop-types';
 import {FaTimes} from 'react-icons/all';
 
-const Square = ({course, backgroundColor, onClickFa, onMouseOverFa}) => {
+const Square = ({course, backgroundColor, onClickFa, onMouseOverFa, onMouseOutFa}) => {
 
     const [check, setCheck] = useState(false);
 
-    let mouseOver = false;
-    console.log('mouseOver :', mouseOver);
-
-    function onMouseOverSquare() {
+    const onMouseOverSquare = () => {
         setCheck(prevCheck => !prevCheck);
     }
 
-    function onMouseOutSquare() {
+    const onMouseOutSquare = () => {
         setCheck(prevCheck => !prevCheck);
     }
 
@@ -30,7 +27,7 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa}) => {
 
     if(course.day1 != null){    
         let h1 = 55.5 * course.time1
-        let s1 = (course.start1 - 7) * 56 - 1
+        let s1 = (course.start1 - 7) * 56
         let d1 = 60 - course.day1 * 15
 
         let LH1;
@@ -44,8 +41,8 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa}) => {
 
         if(course.day2 != null) {
             let h2 = 55.5 * course.time2
-            let s2 = (course.start2 - 7) * 56 - 1
-            let d2 = 60- course.day2 * 15
+            let s2 = (course.start2 - 7) * 56
+            let d2 = 60 - course.day2 * 15
 
             let LH2;
             if(course.time2 <= 1) {
@@ -57,8 +54,8 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa}) => {
             }
 
             return (
-                <div onMouseOver={onMouseOverSquare()} onMouseOut={onMouseOutSquare()}>
-                    <div style={{
+                <div>
+                    <div onMouseOver={onMouseOverSquare} onMouseOut={onMouseOutSquare} style={{
                         position: 'fixed',
                         backgroundColor: backgroundColor,
                         border: '0.01px solid black',
@@ -68,18 +65,23 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa}) => {
                         marginLeft: `${d1}%`,
                         borderRadius: '7px',
                         lineHeight: `${LH1}%`,
-                        cursor: 'pointer',
+                        cursor: 'default',
                         }}>
-                        
+                        <h3>
+                            {check ? <FaTimes onMouseOver={onMouseOverFa}
+                                              onMouseOut={onMouseOutFa}
+                                              onClick={onClickFa}
+                                              style={{color: '#C21010',
+                                                      cursor: 'pointer',
+                                                      position: 'absolute'}}/> : <></>}
+                        </h3>
                         <h4 style={hFourStyle}>{course.code}</h4>
                         <h3 style={hThreeStyle}>
                             {course.title}
-                            {check ? <FaTimes onMouseOver={onMouseOverFa} onClick={onClickFa} style={{color: 'red', cursor: 'pointer' }}/> : <></>}
                         </h3>
                         <h4 style={hFourStyle}>{course.professor}</h4>
-
                     </div>
-                    <div style={{
+                    <div onMouseOver={onMouseOverSquare} onMouseOut={onMouseOutSquare} style={{
                         position: 'fixed',
                         backgroundColor: backgroundColor,
                         border: '0.01px solid black',
@@ -89,23 +91,31 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa}) => {
                         marginLeft: `${d2}%`,
                         borderRadius: '7px',
                         lineHeight: `${LH2}%`,
-                        cursor: 'pointer',
-                        }}>
-
+                        cursor: 'default',
+                        }}> 
+                        <h3>
+                            {check ? <FaTimes onMouseOver={onMouseOverFa}
+                                              onMouseOut={onMouseOutFa}
+                                              onClick={onClickFa}
+                                              style={{color: '#C21010',
+                                                      cursor: 'pointer',
+                                                      position: 'fixed'}}/> : <></>}
+                        </h3>
                         <h4 style={hFourStyle}>{course.code}</h4>
                         <h3 style={hThreeStyle}>
                             {course.title}
-                            {check ? <FaTimes onMouseOver={onMouseOverFa} onClick={onClickFa} style={{color: 'red', cursor: 'pointer' }}/> : <></>}
                         </h3>
-                        <h4 style={hFourStyle}>{course.professor}</h4>
-                        
+                        <h4 style={hFourStyle}>{course.professor}</h4>                     
                     </div>
                 </div>
             )
         }else{
             return (
-                <>
-                    <div style={{
+                <div>
+                    <div className='additional'>
+                        
+                    </div>
+                    <div onMouseOver={onMouseOverSquare} onMouseOut={onMouseOutSquare} style={{
                         position: 'fixed',
                         backgroundColor: backgroundColor,
                         border: '0.01px solid black',
@@ -115,56 +125,34 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa}) => {
                         marginLeft: `${d1}%`,
                         borderRadius: '7px',
                         lineHeight: `${LH1}%`,
-                        cursor: 'pointer',
-                        }}>
-
+                        cursor: 'default',
+                        }}>      
+                        <h3>
+                            {check ? <FaTimes onMouseOver={onMouseOverFa}
+                                              onMouseOut={onMouseOutFa}
+                                              onClick={onClickFa}
+                                              style={{color: '#C21010',
+                                                      cursor: 'pointer',
+                                                      position: 'fixed'}}/> : <></>}
+                        </h3>
                         <h4 style={hFourStyle}>{course.code}</h4>
                         <h3 style={hThreeStyle}>
                             {course.title}
-                            {check ? <FaTimes onMouseOver={onMouseOverFa} onClick={onClickFa} style={{color: 'red', cursor: 'pointer' }}/> : ''}
                         </h3>
                         <h4 style={hFourStyle}>{course.professor}</h4>
-
                     </div>
-                </>
+                </div>
             )
         }}
 }
 
 
-// Square.prototype = {
-//   course: PropTypes.object,
-// }
+Square.prototype = {
+  course: PropTypes.object,
+}
 
-// Square.defaultProps = {
-//   course: {
-//     value: '',
-//     id: '',
-//     label: '',
-//     user: '',
-//     college: '',
-//     ws: '',
-//     examDate: '',
-//     title: '',
-//     professor: '',
-//     group: '',
-//     unit: '',
-//     code: '',
-//     capacity: '',
-//     requirement: '',
-//     synthesis: '',
-//     ps: '',
-//     edId: '',
-//     date: '',
-//     start: '',
-//     wsId: '',
-//     day1: '',
-//     time1: '',
-//     start1: '',
-//     day2: '',
-//     time2: '',
-//     start2: '',
-//   }
-// }
+Square.defaultProps = {
+  course: {}
+}
 
 export default Square;
