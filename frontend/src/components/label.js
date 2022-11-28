@@ -56,7 +56,7 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa, onMouseOutFa
             return (
                 <div>
                     <div onMouseOver={onMouseOverSquare} onMouseOut={onMouseOutSquare} style={{
-                        position: 'fixed',
+                        position: 'absolute',
                         backgroundColor: backgroundColor,
                         border: '0.01px solid black',
                         width: '15%',
@@ -69,7 +69,7 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa, onMouseOutFa
                         }}>
                         <h3>
                             {check ? <FaTimes onMouseOver={onMouseOverFa}
-                                              onMouseOut={onMouseOutFa}
+                                              onMouseLeave={onMouseOutFa}
                                               onClick={onClickFa}
                                               style={{color: '#C21010',
                                                       cursor: 'pointer',
@@ -82,7 +82,7 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa, onMouseOutFa
                         <h4 style={hFourStyle}>{course.professor}</h4>
                     </div>
                     <div onMouseOver={onMouseOverSquare} onMouseOut={onMouseOutSquare} style={{
-                        position: 'fixed',
+                        position: 'absolute',
                         backgroundColor: backgroundColor,
                         border: '0.01px solid black',
                         width: '15%',
@@ -95,7 +95,7 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa, onMouseOutFa
                         }}> 
                         <h3>
                             {check ? <FaTimes onMouseOver={onMouseOverFa}
-                                              onMouseOut={onMouseOutFa}
+                                              onMouseLeave={onMouseOutFa}
                                               onClick={onClickFa}
                                               style={{color: '#C21010',
                                                       cursor: 'pointer',
@@ -116,7 +116,7 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa, onMouseOutFa
                         
                     </div>
                     <div onMouseOver={onMouseOverSquare} onMouseOut={onMouseOutSquare} style={{
-                        position: 'fixed',
+                        position: 'absolute',
                         backgroundColor: backgroundColor,
                         border: '0.01px solid black',
                         width: '15%',
@@ -129,7 +129,7 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa, onMouseOutFa
                         }}>      
                         <h3>
                             {check ? <FaTimes onMouseOver={onMouseOverFa}
-                                              onMouseOut={onMouseOutFa}
+                                              onMouseLeave={onMouseOutFa}
                                               onClick={onClickFa}
                                               style={{color: '#C21010',
                                                       cursor: 'pointer',
