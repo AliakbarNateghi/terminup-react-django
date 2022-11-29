@@ -1,0 +1,50 @@
+{% extends 'main.html' %}
+{% block content %}
+
+    <a href="{% url "collegeList" %}" class="logo square"><button class="btn btn-primary" style="background-color: #4285F4; margin-top: 15px; margin-left: 15px">TERMINA</button></a>
+
+    <div class="container form-group form-control" style="margin-top: 30px; height: 600px; width: 1300px; text-align: center">
+        <center>
+            <table class="styled-table" style="text-align: center;">
+                <thead style="font-size: 20px;">
+                    <tr style="text-align: center; color: black">
+                        <th>توضیحات</th>
+                        <th>ساعت شروع امتحان</th>
+                        <th>تاریخ امتحان</th>
+                        <th>گروه</th>
+                        <th>واحد</th>
+                        <th>استاد</th>
+                        <th>کد درس</th>
+                        <th>نام درس</th>
+                        <th>حذف</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size: 17px">
+                    {% for choise in choises %}
+                        <tr class="active-row" style="text-align: center">
+                            <form action="{% url 'delete' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="courseId" value="{{ choise.courseId }}">
+                                <input type="hidden" name="id" value="{{ choise.id }}">
+                                <td><input type="hidden" name="ps" value="{{ choise.ps }}">{{ choise.ps }}</td>
+                                <td><input type="hidden" name="examStart" value="{{ choise.examStart }}">{{ choise.examStart }}</td>
+                                <td><input type="hidden" name="examDate" value="{{ choise.examDate }}">{{ choise.examDate }}</td>
+                                <td><input type="hidden" name="group" value="{{ choise.group }}">{{ choise.group }}</td>
+                                <td><input type="hidden" name="unit" value="{{ choise.unit }}">{{ choise.unit }}</td>
+                                <td><input type="hidden" name="professor" value="{{ choise.professor }}">{{ choise.professor }}</td>
+                                <td><input type="hidden" name="code" value="{{ choise.code }}">{{ choise.code }}</td>
+                                <td><input type="hidden" name="title" value="{{ choise.title }}">{{ choise.title }}</td>
+                                <td><input type="submit" value="&times;" class="btn btn-danger" style="width: 35px"></td>
+                            </form>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </center>
+    </div>
+{#    <div class="container form-control form-group" style="width: 1300px; height: 300px">#}
+{#        <button class="btn btn-success" style="color: white"><a style="color: white" href="https://webtopdf.com/">دانلود</a></button>#}
+{#    </div>#}
+
+{% endblock content %}
+

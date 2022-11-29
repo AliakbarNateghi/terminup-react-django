@@ -15,6 +15,7 @@ import Square from './components/label';
 import Hours from './components/hours';
 import Days from './components/days';
 import Border from './components/border';
+import Additional from './components/additional';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
   const [courseChoised, setCourseChoised] = useState([])
   const [temporaryChoised, setTemporaryChoised] = useState([])
   const [deleteChoised, setDeleteChoised] = useState([])
+  const [boolean, setBoolean] = useState(false)
 
   let choosedCollege = []
 
@@ -63,22 +65,43 @@ function App() {
 
   const courseClick = (event) => {
     event.color = '#CFE8A9';
-    setCourseChoised([...courseChoised, event]); 
+
+    // function uniqueById(items) {
+    //   const set = new Set();
+    //   return items.filter((item) => {
+    //     const isDuplicate = set.has(item.id);
+    //     set.add(item.id);
+    //     return !isDuplicate;
+    //   });
+    // }
+
+    // const updateRestaurantsUnique = (newItems) => {
+    //   setCourseChoised((courses) => {
+    //     return uniqueById([...courses, ...newItems]);
+    //   });
+    // };
+
+    setCourseChoised([...courseChoised, event]);
   }
 
+  // '#FFFDE3'
+  {/* 'rgba(52, 52, 52, 0.5)' */}
   const onMouseOverButton = (event) => {
-    event.color = '#FFFDE3';
-    setTemporaryChoised([...temporaryChoised, event]);
+    event.color = 'rgba(104, 104, 104, 0.85)';
+    setTemporaryChoised([event]);
+    setBoolean(true)
   }
+  // console.log('temporaryChoised :', temporaryChoised);
 
   const onMouseOverDelete = (event) => {
     event.color = '#E64848';
-    setDeleteChoised([...deleteChoised, event]);
+    setDeleteChoised([event]);
   }
 
   const onMouseOutButton = (event) => {
     event.color = '#CFE8A9';
     setTemporaryChoised(temporaryChoised.filter((course) => course.id !== event.id))
+    setBoolean(false)
   }
 
   const onMouseOutDelete = (event) => {
@@ -89,6 +112,7 @@ function App() {
   const deleteCourse = (event) => {
     event.color = 'white';
     setCourseChoised(courseChoised.filter((course) => course.id !== event.id))
+    setDeleteChoised(deleteChoised.filter((course) => course.id !== event.id))
   }
 
   // console.log('courseChoised :', courseChoised);
@@ -123,7 +147,7 @@ function App() {
     }
 
     for(let i in ed) {
-      if(ed[i].id == courseItem.ed) {
+      if(ed[i].id == courseItem.examDate) {
         edId = ed[i].id;
         date = ed[i].date;
         start = ed[i].start;
@@ -144,7 +168,7 @@ function App() {
       unit: courseItem.unit,
       code: courseItem.code,
       capacity: courseItem.capacity,
-      requirements: courseItem.requirements,
+      requirements: courseItem.requirement,
       synthesis: courseItem.synthesis,
       ps: courseItem.ps,
       edId: edId,
@@ -196,24 +220,17 @@ function App() {
         />
       </div>
 
-      {/* <Customtable courses={courseChoised}
-                   temporaryCourses={temporaryChoised}
-                   deleteCourse={deleteChoised}
-                   onClickFa={}
-                   onMouseOverFa={}
-                   onMouseOutFa={}/> */}
-
       <div className='table'>
         <Hours />
         <div style={divStyle}>  
             <Days />
             {courseChoised.map(courseItem => <Square key={courseItem.id}
-                                                course={courseItem}
-                                                backgroundColor={courseItem.color}
-                                                onMouseOverFa={() => onMouseOverDelete(courseItem)}
-                                                onClickFa={() => deleteCourse(courseItem)}
-                                                onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
-            {/* 'rgba(52, 52, 52, 0.5)' */}
+                                                     course={courseItem}
+                                                     backgroundColor={courseItem.color}
+                                                     onMouseOverFa={() => onMouseOverDelete(courseItem)}
+                                                     onClickFa={() => deleteCourse(courseItem)}
+                                                     onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
+            
             {temporaryChoised.map(courseItem => <Square key={courseItem.id}
                                                         course={courseItem}
                                                         backgroundColor={courseItem.color}
@@ -222,38 +239,47 @@ function App() {
                                                         onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
 
             {deleteChoised.map(courseItem => <Square key={courseItem.id}
-                                                      course={courseItem}
-                                                      backgroundColor={courseItem.color}
-                                                      onMouseOverFa={() => onMouseOverDelete(courseItem)}
-                                                      onClickFa={() => deleteCourse(courseItem)}
-                                                      onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
+                                                     course={courseItem}
+                                                     backgroundColor={courseItem.color}
+                                                     onMouseOverFa={() => onMouseOverDelete(courseItem)}
+                                                     onClickFa={() => deleteCourse(courseItem)}
+                                                     onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
             <Border />
         </div>           
       </div>
 
-      <div style={{width: '15%', marginLeft: '5%', paddingTop: '1%'}}>
-        <div className='courses' style={{height: '500px', overflow: 'scroll'}}>
+      <div style={{width: '15%', marginLeft: '5%', paddingTop: '1%',}}>
+        <div style={{overflow: 'scroll', height: '400px'}}>
           {courseOptions.map((courseItem) => 
-            {if(courseItem.id !== '') {
-              return <Button key={courseItem.id}
-                        text={courseItem.title}
-                        onClick={() => courseClick(courseItem)}
-                        color={'#FFFDE3'} 
-                        onMouseOver={() => onMouseOverButton(courseItem)}
-                        onMouseOut={() => onMouseOutButton(courseItem)}
-                      />
+            {if(courseItem.id !== null) {
+              return <Button 
+                          key={courseItem.id}
+                          text={courseItem.title}
+                          color={'#FFFDE3'}
+                          value={courseItem} 
+                          onClick={() => courseClick(courseItem)}
+                          onMouseOver={() => onMouseOverButton(courseItem)}
+                          onMouseOut={() => onMouseOutButton(courseItem)}
+                        />
           }})}
         </div>
 
         <br></br>
 
-        <div>
-          <p>
-            ....................
-          </p>
+        <div style={{backgroundColor: 'rgba(104, 104, 104, 1)', borderRadius: '7px'}}>
+        {/* style={{height: '200px', width: '100%'}} */}
+          {temporaryChoised.map((courseItem) => <Additional key={courseItem.id}
+                                                            course={courseItem}
+                                                            boolean={boolean}/>)}
         </div>
 
-        <div style={{height: '200px', overflow: 'scroll'}}>
+        <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+        
+        <p>
+          {courseChoised.length > 0 ? ':کلاس های انتخاب شده' : ''}
+        </p>
+        
+        <div style={{overflow: 'scroll', height: '200px'}}>
           {courseChoised.map((courseItem) => 
             <Button key={courseItem.id}
               text={courseItem.title}

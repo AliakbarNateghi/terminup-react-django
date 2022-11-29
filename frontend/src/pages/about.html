@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+{% block content %}
+    <div style="padding-left: 45%; padding-top: 25px; width: 5%">
+        <a href="{% url "collegeList" %}"><button class="btn btn-primary">TERMINA</button></a>
+    </div>
+    <div class="container form-control about form-group" style="text-align: right">
+        <span style='font-size:25px;'>&#128075;</span>
+        <p>دوست قشنگم سلام</p><br>
+        <span style='font-size:25px;'>&#128219;</span>
+        <p>این سایت صرفابرای دغدغه شخصی (بخوانید رزومه) ساخته شده. دقت کن ک انتخاب واحد توی این سایت انتخاب واحد اصلی نیست و فقط برای راحتی شماست</p><br>
+        <span style='font-size:25px;'>&#129311;</span>
+        <p>اگه ایده ای‌ برای بهتر شدن سایت یا انتقاد و پیشنهادی داری خیلی خوشحال میشم ک از طریق یکی از راه های ارتباطی زیر بهم اطلاع بدی</p><br>
+        <span style='font-size:25px;'>&#9749;</span>
+        <p>در ضمن میتونی از طریق لینک ب من کمک کنی یا یدونه کافه مهمونم کنی یه دلگرمی بزرگ</p><br>
+        <p style="text-align: center"><a href="{% url "donate" %}"><button class="btn btn-danger">Donate</button></a></p><br>
+        <span style='font-size:25px;'>&#128718;</span>
+        <p>راستی تا یادم نرفته اگه دوست داری دروس دانشکدتون توی سایت قرار بگیره حتما بهم اطلاع بده مهم نیست چ رشته میخونی و دانشگاهت کجاست</p><br>
+        <p><span style='font-size:25px;'>&#128525;</span>  دوستتون دارم خیلی زیاد</p>
+    </div>
+    <div class="container form-control" style="height: 100px">
+        <div class="form-group" style="text-align: center; padding-top: 22.5px">
+            <a href="https://t.me/aliakbar_nateghi"><button class="btn btn-primary" style="font-size:24px; background-color: #0088cc"><i class="bi bi-telegram"> Telegram </i></button></a>
+            <a href="mailto:nateghialiakbar@yahoo.com?subject = Feedback&body = Message"><button class="btn btn-dark" style="font-size:24px;"><i class="bi bi-envelope"> Email </i></button></a>
+            <a href=" https://wa.me/989309096215"><button class="btn btn-success" style="font-size:24px; background-color: #128C7E"><i class="bi bi-whatsapp"> Whatsapp </i></button></a>
+        </div>
+    </div>
+    <br>
+    <div class="container form-control" style="height: 200px; text-align: right; padding-bottom: 25px">
+        <h1 style="padding-top: 25px; padding-right: 25px">لیست دانشگاه ها و دانشکده های موجود در سیستم</h1>
+        <h2 style="padding-top: 55px; padding-right: 35px">دانشگاه تبریز<span style='font-size:25px;'>&#11013;</span></h2>
+        <h4 style=" padding-right: 85px">دانشکده فیزیک<span style='font-size:25px;'>&#11013;</span></h4>
+    </div>
+    <br><br><br><br><br><br><br><br>
+
+{% endblock content %}

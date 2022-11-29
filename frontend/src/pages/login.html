@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% block content %}
+
+    <form action="{% url "login" %}" method="post">
+        {% csrf_token %}
+        <span style='font-size:25px;'>&#128075;</span>
+        <h2 style="font-family: 'B Nazanin'; float: right"> ب ترمینا خوش اومدی </h2>
+        <br>
+        <h4 style="font-family: 'B Nazanin'; float: right">لطفا با لپتاپ وارد شین (البته فعلا)</h4>
+        <br><br><br>
+        <h1 style="font-family: 'B Nazanin'; font-size: 45px; float: right"> ورود </h1>
+        <br><br><br><br><br>
+        <div class="form-group">
+            <label for="username"> نام کاربری </label>
+            <input class="form-control form-control-lg" id="username" type="text" name="username"
+            maxlength="100" style="" size="40" required>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="password"> رمز عبور </label>
+            <input class="form-control form-control-lg" id="password" type="password" name="password"
+             maxlength="256" style="" placeholder="**********" required>
+        </div>
+        <br>
+        <input type="submit" value=" ورود " class="btn btn-primary bg-primary" style="float: right; font-size: 16px">
+        <br><br><br>
+        <p style="float: right; font-family: 'B Nazanin'; font-size: 20px"> آیا حساب کاربری ندارید؟ <a href="{% url "register" %}"> ثبت نام </a></p>
+    </form>
+
+
+{% endblock content %}

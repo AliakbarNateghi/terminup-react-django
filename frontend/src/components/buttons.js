@@ -9,11 +9,9 @@ const Button = ({courseItem, color, text, onClick, onMouseOver, onMouseOut}) =>
                                 backgroundColor: color,
                                 fontSize: '10px',
                                 width: '95%',
-                                height: '4%',
+                                height: '35px',
                                 border: '0.01px solid black',
-                                // overflow: 'scroll',
-                            }}
-                                >{text}</button>
+                            }}>{text}</button>
 }
 
 Button.defaultProps = {

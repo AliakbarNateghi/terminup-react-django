@@ -27,7 +27,7 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa, onMouseOutFa
 
     if(course.day1 != null){    
         let h1 = 55.5 * course.time1
-        let s1 = (course.start1 - 7) * 56
+        let s1 = (course.start1 - 7) * 56 - 1
         let d1 = 60 - course.day1 * 15
 
         let LH1;
@@ -41,7 +41,7 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa, onMouseOutFa
 
         if(course.day2 != null) {
             let h2 = 55.5 * course.time2
-            let s2 = (course.start2 - 7) * 56
+            let s2 = (course.start2 - 7) * 56 - 1
             let d2 = 60 - course.day2 * 15
 
             let LH2;
@@ -99,7 +99,7 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa, onMouseOutFa
                                               onClick={onClickFa}
                                               style={{color: '#C21010',
                                                       cursor: 'pointer',
-                                                      position: 'fixed'}}/> : <></>}
+                                                      position: 'absolute'}}/> : <></>}
                         </h3>
                         <h4 style={hFourStyle}>{course.code}</h4>
                         <h3 style={hThreeStyle}>
@@ -133,7 +133,7 @@ const Square = ({course, backgroundColor, onClickFa, onMouseOverFa, onMouseOutFa
                                               onClick={onClickFa}
                                               style={{color: '#C21010',
                                                       cursor: 'pointer',
-                                                      position: 'fixed'}}/> : <></>}
+                                                      position: 'absolute'}}/> : <></>}
                         </h3>
                         <h4 style={hFourStyle}>{course.code}</h4>
                         <h3 style={hThreeStyle}>
