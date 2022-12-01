@@ -111,3 +111,8 @@ footer {
   margin-top: 30px;
   text-align: center;
 }
+
+@font-face {
+  font-family: 'soltanAdan';
+  src: url('./pages/soltan-adan/soltanAdan.ttf') format('truetype');
+}

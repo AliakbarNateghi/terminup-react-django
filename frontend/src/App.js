@@ -32,7 +32,7 @@ function App() {
   let choosedCollege = []
 
   const onload = (e) => {
-      e.preventDefault();
+      // e.preventDefault();
   }
 
   useEffect(() => {
@@ -225,11 +225,11 @@ function App() {
         <div style={divStyle}>  
             <Days />
             {courseChoised.map(courseItem => <Square key={courseItem.id}
-                                                     course={courseItem}
-                                                     backgroundColor={courseItem.color}
-                                                     onMouseOverFa={() => onMouseOverDelete(courseItem)}
-                                                     onClickFa={() => deleteCourse(courseItem)}
-                                                     onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
+                                                    course={courseItem}
+                                                    backgroundColor={courseItem.color}
+                                                    onMouseOverFa={() => onMouseOverDelete(courseItem)}
+                                                    onClickFa={() => deleteCourse(courseItem)}
+                                                    onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
             
             {temporaryChoised.map(courseItem => <Square key={courseItem.id}
                                                         course={courseItem}
@@ -239,11 +239,11 @@ function App() {
                                                         onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
 
             {deleteChoised.map(courseItem => <Square key={courseItem.id}
-                                                     course={courseItem}
-                                                     backgroundColor={courseItem.color}
-                                                     onMouseOverFa={() => onMouseOverDelete(courseItem)}
-                                                     onClickFa={() => deleteCourse(courseItem)}
-                                                     onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
+                                                    course={courseItem}
+                                                    backgroundColor={courseItem.color}
+                                                    onMouseOverFa={() => onMouseOverDelete(courseItem)}
+                                                    onClickFa={() => deleteCourse(courseItem)}
+                                                    onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
             <Border />
         </div>           
       </div>
