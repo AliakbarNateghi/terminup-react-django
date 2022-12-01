@@ -1,0 +1,7 @@
+@font-face {
+font-family: "sultan_adan_2line";
+src: url("CustomFont.eot");
+src: url("/frontend/src/pages//webfontkit-20221130-163239/sultan_adan_2line_-webfont.woff") format("woff"),
+url("CustomFont.otf") format("opentype"),
+url("CustomFont.svg#filename") format("svg");
+}
