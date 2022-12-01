@@ -1,25 +1,29 @@
 import React from 'react';
 import { elastic as Menu } from 'react-burger-menu';
 import '../Sidebar.css';
+import About from '../pages/about';
+import { Outlet, Link, Route, Routes, Router, BrowserRouter } from "react-router-dom";
 
 export default props => {
   return (
     <Menu>
-      <a className="menu-item" href="/">
+      <Link to='/'>
         صفحه اصلی
-      </a>
-      <a className="menu-item" href="/save">
+      </Link>
+      <Link to='/save'>
         ذخیره برنامه
-      </a>
-      <a className="menu-item" href="/donate">
+      </Link>
+      <Link to='/donate'>
         ساپورت مالی
-      </a>
-      <a className="menu-item" href="/contactus">
-        تماس با من
-      </a>
-      <a className="menu-item" href="/logout">
+      </Link>
+      <Link to="/about">
+        درباره من
+      </Link>
+      {/* <a className="menu-item" href="/logout">
         خروج
-      </a>
+      </a> */}
+
+      <Outlet />
     </Menu>
   );
 };
