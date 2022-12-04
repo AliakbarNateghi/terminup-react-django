@@ -1,6 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+class student(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True,
+                             blank=True)
+    password = models.CharField(max_length=256, blank=False, null=False)
+    email = models.EmailField(blank=False, null=False)
 
 class ws(models.Model):  # WeeklySchedule
     day1 = models.IntegerField(blank=True, null=True)  # Saturday: 0 , ... , Friday: 6
