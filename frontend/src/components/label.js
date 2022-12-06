@@ -1,7 +1,7 @@
 import React, { Component }  from 'react';
 import { useState, useEffect} from "react";
 import PropTypes, { func, number } from 'prop-types';
-import {FaTimes} from 'react-icons/all';
+import {FaTimes} from 'react-icons/fa';
 
 const Square = ({course, backgroundColor, onClickFa, onMouseOverFa, onMouseOutFa}) => {
 
