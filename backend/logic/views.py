@@ -1,6 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import courseSerializer, collegeSerializer, wsSerializer, edSerializer, choiseSerializer, studentSerializer, userSerializer
+from .serializers import courseSerializer, collegeSerializer, wsSerializer, edSerializer, choiseSerializer, userSerializer
 from .models import course, College, ws, ExamDate, studentChoise, student, User
 # from django.contrib.auth.models import User
 
@@ -14,6 +14,7 @@ def apiOverview(request):
         'ws': '/ws-list',
         'Detail View': '/course-detail/<str:pk>/',
         'courseCreate': '/course-create/',
+        'userCreate': '/user-create/',
         'courseUpdate': '/course-update/<str:pk>/',
         'courseDelete': '/course-delete/<str:pk>/',
         'studentChoise': '/student-choise/<str:pk>/',
@@ -77,6 +78,19 @@ def courseCreate(request):
 
     if serializer.is_valid():
         serializer.save()
+
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def userCreate(request):
+    serializer = userSerializer(data=request.data)
+
+    if serializer.is_valid():
+        user = serializer.save()
+
+    user.set_password(serializer.validated_data.get('password'))
+    user.save()
 
     return Response(serializer.data)
 
