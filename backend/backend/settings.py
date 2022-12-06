@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'logic.apps.LogicConfig',
     'rest_framework',
     'corsheaders',
+    'oauth2_provider',
+    'provider'
 ]
 
 MIDDLEWARE = [
