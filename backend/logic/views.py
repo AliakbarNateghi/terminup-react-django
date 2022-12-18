@@ -1,8 +1,17 @@
-from rest_framework.decorators import api_view
+from django.http import JsonResponse
+from rest_framework import permissions
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
 from .serializers import courseSerializer, collegeSerializer, wsSerializer, edSerializer, choiseSerializer, userSerializer
 from .models import course, College, ws, ExamDate, studentChoise, student, User
 # from django.contrib.auth.models import User
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse_lazy
+from serializers import *
 
 
 @api_view(['GET'])
@@ -18,9 +27,38 @@ def apiOverview(request):
         'courseUpdate': '/course-update/<str:pk>/',
         'courseDelete': '/course-delete/<str:pk>/',
         'studentChoise': '/student-choise/<str:pk>/',
+        'token': '/token',
+        'token-refresh': '/token/refresh',
     }
 
     return Response(api_urls)
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        # ...
+
+        return token
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+
+# @api_view(['GET'])
+# def getRoutes(request):
+#     routes = [
+#         '/api/token',
+#         '/api/token/refresh',
+#     ]
+
+#     return Response(routes)
+
 
 
 @api_view(['GET'])
@@ -38,6 +76,7 @@ def courseList(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def StudentChoise(request):
     choises = studentChoise.objects.all().order_by('-id')
     serializer = choiseSerializer(choises, many=True)
@@ -114,3 +153,30 @@ def courseDelete(request, pk):
     return Response('Deleted')
 
 
+# class Home(LoginRequiredMixin, List)
+
+
+# @api_view(['POST'])
+# def register(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('name')
+#         email = request.POST.get('email')
+#         password = request.POST.get('password')
+
+#         user = User(
+#             username=username,
+#             email=email,
+#             password=password,
+#         )
+    
+#         user.save()
+#         return Response(status=status.HTTP_201_CREATED)
+
+#     # return HttpResponseRedirect(reverse_lazy(courseList))
+#     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+# def login(request):
+#     pass
+
+# def logout(request):
+#     pass

@@ -70,15 +70,17 @@ class course(models.Model):
 class studentChoise(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE, null=True,
                                 blank=True)
-    courseId = models.IntegerField(blank=True, null=True)
-    title = models.CharField(blank=True, null=True, max_length=256)
-    professor = models.CharField(blank=True, null=True, max_length=256)
-    group = models.IntegerField(blank=True, null=True)
-    unit = models.IntegerField(blank=True, null=True)
-    code = models.IntegerField(blank=True, null=True)
-    ps = models.CharField(blank=True, null=True, max_length=256, default='ندارد')
-    examDate = models.DateField(blank=True, null=True)
-    examStart = models.FloatField(blank=True, null=True)
+    course = models.ForeignKey(course, on_delete=models.CASCADE, null=True,
+                                blank=True)
+    # courseId = models.IntegerField(blank=True, null=True)
+    # title = models.CharField(blank=True, null=True, max_length=256)
+    # professor = models.CharField(blank=True, null=True, max_length=256)
+    # group = models.IntegerField(blank=True, null=True)
+    # unit = models.IntegerField(blank=True, null=True)
+    # code = models.IntegerField(blank=True, null=True)
+    # ps = models.CharField(blank=True, null=True, max_length=256, default='ندارد')
+    # examDate = models.DateField(blank=True, null=True)
+    # examStart = models.FloatField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.code} : {self.title} picked by {self.student}'
+        return f'{self.course} : picked by {self.student}'
