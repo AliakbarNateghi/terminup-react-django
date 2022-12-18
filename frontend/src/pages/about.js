@@ -2,9 +2,12 @@ import React, { Component }  from 'react';
 import { useState, useEffect} from "react";
 import PropTypes from 'prop-types'
 import { Outlet, Link, Route, Routes, Router, BrowserRouter } from "react-router-dom";
-import { AiFillCaretLeft } from "react-icons/ai";
+import { AiFillCaretLeft } from "react-icons/all";
 import '../App.css'
-import { AiFillGithub, IoLogoWhatsapp, BsTelegram, SiGmail } from 'react-icons/all'
+import { AiFillGithub } from 'react-icons/ai'
+import { IoLogoWhatsapp } from 'react-icons/io';
+import { BsTelegram } from 'react-icons/bs';
+import { SiGmail } from 'react-icons/si';
 import Sidebar from '../components/Sidebar';
 
 const About = () => {
@@ -37,7 +40,7 @@ const About = () => {
                     <IoLogoWhatsapp style={{fontSize : '70px', color: '#128C7E'}} />
                 </a>
                 <a href='https://t.me/Aliakbar_Nateghi'>
-                    <BsTelegram style={{fontSize : '70px', color: '#0088cc'}} />
+                    {/* <BsTelegram style={{fontSize : '70px', color: '#0088cc'}} /> */}
                 </a>
                 <a href='mailto:lkbrntgh@gmail.com?subject = Feedback&body = Message'>
                     <SiGmail style={{fontSize : '70px', color: '#c71610'}} />

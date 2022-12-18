@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import '../App.css'
 import Sidebar from '../components/Sidebar'
-import { BiCoffeeTogo, BiDonateHeart, GrContact } from 'react-icons/all'
+import { BiCoffeeTogo, BiDonateHeart} from 'react-icons/bi';
+import { GrContact } from 'react-icons/gr'
 
 const Donate = () => {
     return (
