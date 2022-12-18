@@ -11,42 +11,42 @@ import Register from './components/register';
 import Login from './components/login';
 
 
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);
+
+// function GeneralApp () {
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//         <Route path='/' element={<App />} />
+//         <Route path='/about' element={<About />} />
+//         <Route path='/donate' element={<Donate />} />
+//         <Route path='/register' element={<Register />} />
+//         <Route path='/login' element={<Login />} />
+//         {/* <Route exact path={"/home"} element={<Home />} />
+//         <Route exact path="/login" element={<Login />} />
+//         <Route exact path="/register" element={<Register />} />
+//         <Route exact path="/profile" element={<Profile />} />
+//         <Route path="/user" element={<BoardUser />} />
+//         <Route path="/mod" element={<BoardModerator />} /> */}
+//         {/* <Route path="/admin" element={<BoardAdmin />} /> */}
+//         {/* <Route path='/register' element={<UserRegistration />} />
+//         <Route path='/login' element={<UserLogin />} /> */}
+//       </Routes>
+//     </BrowserRouter>
+//   )
+// }
+
+// ReactDOM.createRoot(document.getElementById("root")).render(
 //   <React.StrictMode>
-//     <App />
+//     {/* <BrowserRouter> */}
+//       <GeneralApp />
+//     {/* </BrowserRouter> */}
 //   </React.StrictMode>
 // );
-
-function GeneralApp () {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<App />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/donate' element={<Donate />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/login' element={<Login />} />
-        {/* <Route exact path={"/home"} element={<Home />} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/register" element={<Register />} />
-        <Route exact path="/profile" element={<Profile />} />
-        <Route path="/user" element={<BoardUser />} />
-        <Route path="/mod" element={<BoardModerator />} /> */}
-        {/* <Route path="/admin" element={<BoardAdmin />} /> */}
-        {/* <Route path='/register' element={<UserRegistration />} />
-        <Route path='/login' element={<UserLogin />} /> */}
-      </Routes>
-    </BrowserRouter>
-  )
-}
-
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    {/* <BrowserRouter> */}
-      <GeneralApp />
-    {/* </BrowserRouter> */}
-  </React.StrictMode>
-);
 
 reportWebVitals();
