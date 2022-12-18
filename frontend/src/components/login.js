@@ -1,80 +1,93 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { FiLogIn } from "react-icons/fi";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+// import React, { useState } from "react";
+// import { Link } from "react-router-dom";
+// import { FiLogIn } from "react-icons/fi";
+// import axios from "axios";
+// import { ToastContainer, toast } from "react-toastify";
 
-const Login = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+// const Login = () => {
+//     const [username, setUsername] = useState("");
+//     const [password, setPassword] = useState("");
 
-    function formData() {
-        const form_data = new FormData();
+//     function formData() {
+//         const form_data = new FormData();
 
-        form_data.append("username", username);
-        form_data.append("password", password);
-        form_data.append("grant_type", "your_client_id");
-        form_data.append("client_secret", "your_clinet_Secret");
+//         form_data.append("username", username);
+//         form_data.append("password", password);
+//         form_data.append("grant_type", "password");
+//         form_data.append("client_id", "your_client_id");
+//         form_data.append("client_secret", "your_clinet_Secret");
 
-        return form_data;
-    };
+//         return form_data;
+//     };
 
-    function handlesave (e) {
-        e.preventDefault();
+//     function handlesave (e) {
+//         e.preventDefault();
 
-        const LOGIN_URL = 'http://localhost:8000/o/token'
+//         const LOGIN_URL = 'http://localhost:8000/o/token/'
 
-        axios({
-            baseURL: LOGIN_URL,
-            method: 'POST',
-            data: formData(),
-        }).then((res) => {
-            console.log('res.status :', res.status);
-            if (res.status === 200 || res.status === 201) {
-                console.log(res.data);
-                console.log('res.status :', res.status);
-                localStorage.setItem("user-token", res.data.access_token);
-                alert("You entered successfully !");
-                window.location.href = "/";
-            }
-        }).catch((error) => {
-            console.log("ERROR", error);
-            alert(error.response.data);
-        });
-    }
+//         // var token ="";
+//         // function loadUserCredentials() {
+//         // token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
+//         // if (token) {
+//         //     useCredentials(token);
+//         // }}
 
-    return (
-        <div>
-            <form onSubmit={handlesave}>
+//         axios({
+//             baseURL: LOGIN_URL,
+//             method: 'POST',
+//             data: formData(),
+//             config: {headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': 'Bearer '+ token
+//             },},
+//         }).then((res) => {
+//             console.log('res.status :', res.status);
+//             if (res.status === 200 || res.status === 201) {
+//                 console.log(res.data);
+//                 console.log('res.status :', res.status);
+//                 localStorage.setItem("user-token", res.data.access_token);
+//                 alert("You entered successfully !");
+//                 window.location.href = "/";
+//             }
+//         }).catch((error) => {
+//             console.log("ERROR", error);
+//             alert(error);
+//         });
+//     }
 
-                <input 
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="username"
-                    type="username"
-                    name="username"
-                />
-                <br />
-                <input
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="password"
-                    type="password"
-                    name="password"
-                />
-                <br />
-                <input className="btn" value="submit" type="submit" />
-                <br />
-                <Link to="/register" className="back-link">
-                    <FiLogIn size={16} color="b366ff" />
-                    Don't have an account???
-                </Link>
-            </form>
-        </div>
-    )
-}
+//     return (
+//         <div>
+//             <form onSubmit={handlesave}>
 
-export default Login;
+//                 <input 
+//                     value={username}
+//                     onChange={(e) => setUsername(e.target.value)}
+//                     placeholder="username"
+//                     type="username"
+//                     name="username"
+//                 />
+//                 <br />
+//                 <input
+//                     value={password}
+//                     onChange={(e) => setPassword(e.target.value)}
+//                     placeholder="password"
+//                     type="password"
+//                     name="password"
+//                 />
+//                 <br />
+//                 <input className="btn" value="submit" type="submit" />
+//                 <br />
+//                 <Link to="/register" className="back-link">
+//                     <FiLogIn size={16} color="b366ff" />
+//                     Don't have an account???
+//                 </Link>
+//             </form>
+//             <ToastContainer />
+//         </div>
+//     )
+// }
+
+// export default Login;
 
 // const Login = () => {
 //   const [email, setEmail] = useState("");
