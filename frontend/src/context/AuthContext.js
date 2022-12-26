@@ -1,70 +1,72 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect, useContext } from 'react'
 import jwt_decode from "jwt-decode";
-import { useNavigate } from 'react-router-dom'
+import { useHistory, Redirect } from 'react-router-dom'
 
 const AuthContext = createContext()
 
 export default AuthContext;
 
+// export default useAuth = () => {
+//     return useContext(AuthContext)
+// }
 
-export const AuthProvider = ({children}) => {
-    let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
-    let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
-    let [loading, setLoading] = useState(true)
+export const AuthProvider = ({ children }) => {
+    const [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
+    const [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
+    const [loading, setLoading] = useState(true)
 
-    const navigate = useNavigate()
+    const navigate = useHistory()
 
-    let loginUser = async (e)=> {
+    let loginUser = async (e) => {
         e.preventDefault()
         let response = await fetch('http://127.0.0.1:8000/api/token/', {
             method:'POST',
             headers:{
-                'Content-Type':'application/json'
+                'Content-Type': 'application/json'
             },
             body:JSON.stringify({
-                                // username,
-                                // password
                                 'username': e.target.username.value,
                                 'password': e.target.password.value
                                 })
         })
-        let data = await response.json()
+        const data = await response.json()
 
         if(response.status === 200){
             setAuthTokens(data)
             setUser(jwt_decode(data.access))
             localStorage.setItem('authTokens', JSON.stringify(data))
-            navigate('/')
+            navigate.push('/')
+            window.location.reload()
         } else {
             alert('Something went wrong!')
         }
     }
 
-    // const registerUser = async (username, password, password2) => {
-    //     const response = await fetch("http://127.0.0.1:8000/api/register/", {
-    //     method: "POST",
-    //     headers: {
-    //         "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //         username,
-    //         password,
-    //         password2
-    //     })
-    //     });
-    //     if (response.status === 201) {
-    //     history.push("/login");
-    //     } else {
-    //     alert("Something went wrong!");
-    //     }
-    // };
+    const registerUser = async (username, password, password2) => {
+        const response = await fetch("http://127.0.0.1:8000/api/register/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username,
+            password,
+            password2
+        })
+        });
+        if (response.status === 201) {
+        navigate.push("/login");
+        } else {
+        alert("Something went wrong!");
+        }
+    };
 
 
     let logoutUser = () => {
         setAuthTokens(null)
         setUser(null)
         localStorage.removeItem('authTokens')
-        navigate('/login')
+        navigate.push('/login')
     }
 
 
@@ -96,9 +98,9 @@ export const AuthProvider = ({children}) => {
 
     let contextData = {
         user:user,
-        // registerUser,
-        // setUser,
-        // setAuthTokens,
+        registerUser,
+        setUser,
+        setAuthTokens,
         authTokens:authTokens,
         loginUser:loginUser,
         logoutUser:logoutUser,
