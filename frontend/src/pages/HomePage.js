@@ -23,8 +23,27 @@ const HomePage = () => {
   const [temporaryChoised, setTemporaryChoised] = useState([])
   const [deleteChoised, setDeleteChoised] = useState([])
   const [boolean, setBoolean] = useState(false)
+  const [studentChoise, setStudentChoise] = useState([])
 
   let choosedCollege = []
+
+  // function getCookie(name) {
+  //   let cookieValue = null;
+  //   if (document.cookie && document.cookie !== '') {
+  //       const cookies = document.cookie.split(';');
+  //       for (let i = 0; i < cookies.length; i++) {
+  //           const cookie = cookies[i].trim();
+  //           // Does this cookie string begin with the name we want?
+  //           if (cookie.substring(0, name.length + 1) === (name + '=')) {
+  //               cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+  //               break;
+  //           }
+  //       }
+  //   }
+  //   return cookieValue;
+  // }
+
+  // let csrftoken = getCookie('csrftoken');
 
   const onload = (e) => {
       e.preventDefault();
@@ -94,18 +113,19 @@ const HomePage = () => {
                 }
               });
               if(choiseResult.status === 200) {
-                // setCollege(choiseResult.data);
-                setCourseChoised([...courseChoised, choiseResult])
+
+                setStudentChoise(choiseResult.data)
+                
+                // if(courseChoised.length < 1) {
+                //   setCourseChoised(choiseResult.data);
+                // } else {
+                //   setCourseChoised([...courseChoised, choiseResult.data])
+                // }
+          
               } else if(choiseResult.statusText === 'Unauthorized') { 
                 logoutUser();
               }
 
-            //   const courseResult = await axios.get('http://127.0.0.1:8000/api/course-list/');
-            //   setCourse(courseResult.data);
-            //   const wsResult = await axios.get('http://127.0.0.1:8000/api/ws-list/');
-            //   setWs(wsResult.data);
-            //   const edResult = await axios.get('http://127.0.0.1:8000/api/ed-list/');
-            //   setEd(edResult.data);
           } catch (err) {
               console.log(err);
           }
@@ -116,6 +136,7 @@ const HomePage = () => {
   // console.log('course :', course);
   // console.log('ws :', ws);
   // console.log('ed :', ed);
+  console.log('studentChoise :', studentChoise);
 
   const collegeClick = (event) => {
     choosedCollege = [];
@@ -123,13 +144,68 @@ const HomePage = () => {
     setChoised(choosedCollege)
   }
 
+  // studentChoise.map(studentChoise => )
+
+  for(let j in studentChoise) {
+    for(let i in course) {
+      if(studentChoise[j].course === course[i].id) {
+        // console.log('course[i] :', course[i]);
+        // setCourseChoised(courseChoised => courseChoised.concat(course[i]))
+        setCourseChoised(courseChoised => [...courseChoised, course[i]])
+        break;
+      }
+    }
+  }
+
+//   const filteredArray = course.filter(value => studentChoise.includes(value))
+  
+
+  // function intersect(a, b) {
+  //   var setA = new Set(a);
+  //   var setB = new Set(b);
+  //   var intersection = new Set([...setA].filter(x => setB.has(x)));
+  //   return Array.from(intersection);
+  // }   
+  // let filteredArray = intersect(course, studentChoise)
+
+  // console.log('filteredArray :', filteredArray)
+
+  
+
+
   const courseClick = (event) => {
     event.color = '#CFE8A9';
     setCourseChoised([...courseChoised, event]);
+
+    
+
+    // const trimmed = event.trim();
+
+    // if (trimmed && !courseChoised.includes(trimmed)) {
+    //   setCourseChoised(prevState => prevState.concat(trimmed))
+    // }
+    
+    // fetch('http://127.0.0.1:8000/api/student-choise/', {
+    //   method: 'POST', 
+    //   headers: {
+    //     'Content-type': 'application/json',
+    //     'X_CSRFToken': csrftoken,
+    //   },
+    //   body: JSON.stringify({'student': event.user,
+    //                         'course': event})
+    // })  
   }
 
-  // '#FFFDE3'
-  {/* 'rgba(52, 52, 52, 0.5)' */}
+    // const depArray = [100,80, 70, 80, 90,100, 71, 80];
+
+    // let whitoutDuplicates = [];
+
+    // let withoutDuplicates = courseChoised.filter(function(elem, pos) {
+    //   return courseChoised.indexOf(elem) == pos;
+    // });
+
+//   const whitoutDuplicates = [...new Set(courseChoised)]
+
   const onMouseOverButton = (event) => {
     event.color = 'rgba(104, 104, 104, 0.85)';
     setTemporaryChoised([event]);
@@ -159,7 +235,7 @@ const HomePage = () => {
     setDeleteChoised(deleteChoised.filter((course) => course.id !== event.id))
   }
 
-  // console.log('courseChoised :', courseChoised);
+  
 
   let collegeOptions = college.map( function (collegeItem) {
       return {value: collegeItem.id, label: collegeItem.college}
@@ -232,6 +308,9 @@ const HomePage = () => {
     return object
   })
 
+//   console.log('withoutDuplicates :', withoutDuplicates);
+  console.log('courseChoised :', courseChoised);
+
   const customStyles = {
       option: (provided, state) => ({
         ...provided,
@@ -269,11 +348,11 @@ const HomePage = () => {
         <div style={divStyle}>  
             <Days />
             {courseChoised.map(courseItem => <Square key={courseItem.id}
-                                                    course={courseItem}
-                                                    backgroundColor={courseItem.color}
-                                                    onMouseOverFa={() => onMouseOverDelete(courseItem)}
-                                                    onClickFa={() => deleteCourse(courseItem)}
-                                                    onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
+                                                     course={courseItem}
+                                                     backgroundColor={courseItem.color}
+                                                     onMouseOverFa={() => onMouseOverDelete(courseItem)}
+                                                     onClickFa={() => deleteCourse(courseItem)}
+                                                     onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
             
             {temporaryChoised.map(courseItem => <Square key={courseItem.id}
                                                         course={courseItem}
@@ -283,11 +362,11 @@ const HomePage = () => {
                                                         onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
 
             {deleteChoised.map(courseItem => <Square key={courseItem.id}
-                                                    course={courseItem}
-                                                    backgroundColor={courseItem.color}
-                                                    onMouseOverFa={() => onMouseOverDelete(courseItem)}
-                                                    onClickFa={() => deleteCourse(courseItem)}
-                                                    onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
+                                                     course={courseItem}
+                                                     backgroundColor={courseItem.color}
+                                                     onMouseOverFa={() => onMouseOverDelete(courseItem)}
+                                                     onClickFa={() => deleteCourse(courseItem)}
+                                                     onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
             <Border />
         </div>           
       </div>
