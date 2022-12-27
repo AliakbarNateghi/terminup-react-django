@@ -86,6 +86,17 @@ def StudentChoise(request):
     return Response(serializer.data)
 
 
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# def student_choise(request):
+#     serializer = choiseSerializer(data=request.data)
+
+#     if serializer.is_valid():
+#         serializer.save()
+
+#     return Response(serializer.data)
+
+
 @api_view(['GET'])
 def collegeList(request):
     colleges = College.objects.all().order_by('-id')
