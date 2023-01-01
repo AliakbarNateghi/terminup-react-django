@@ -27,6 +27,15 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOWED_ORIGIN_REGEXES = [
     'http://localhost:3000',
 ]
+CORS_ALLOW_HEADERS = [
+    'Accept',
+    'Authorization',
+    'Content-type',
+    'charset',
+    'Content-Encoding',
+    'Origin',
+    'X-Requested-With',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
