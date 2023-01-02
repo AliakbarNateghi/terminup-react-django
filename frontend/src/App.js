@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import PrivateRoute from './utils/PrivateRoute'
 import { AuthProvider } from './context/AuthContext'
-import './index2.css'
+import './index.css'
 
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
