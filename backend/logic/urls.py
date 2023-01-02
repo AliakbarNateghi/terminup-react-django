@@ -19,18 +19,9 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('', views.apiOverview, name='api-overview'),
     path('users/', views.users, name='users'),
-    # path('course-list/', views.courseList, name='course-list'),
-    # path('college-list/', views.collegeList, name='college-list'),
     path('ws-list/', views.wsList, name='ws-list'),
     path('ed-list/', views.edList, name='ed-list'),
-    # path('student-post/', views.studentPost, name='student-post'),
-    # path('student-choise/', views.StudentChoise, name='student-choise'),
-    # path('course-detail/<str:pk>/', views.courseDetail, name='course-detail'),
-    # path('course-create/', views.courseCreate, name='course-create'),
     path('user-create/', views.userCreate, name='user-create'),
-    # path('course-update/<str:pk>/', views.courseUpdate, name='course-update'),
-    # path('course-delete/<str:pk>/', views.courseDelete, name='course-delete'),
-    # path('choise-delete/<str:pk>/', views.deleteChoise, name='delete'),
     path('', include(router.urls))
 ]
 
