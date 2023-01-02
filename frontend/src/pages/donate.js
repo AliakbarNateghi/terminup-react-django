@@ -6,6 +6,9 @@ import { BiCoffeeTogo, BiDonateHeart} from 'react-icons/bi';
 import { GrContact } from 'react-icons/gr'
 
 const Donate = () => {
+
+    // window.location.reload();
+    
     return (
         <div>
             <Sidebar />

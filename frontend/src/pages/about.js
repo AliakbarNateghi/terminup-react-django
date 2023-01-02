@@ -12,6 +12,8 @@ import Sidebar from '../components/Sidebar';
 
 const About = () => {
 
+    // window.location.reload()
+
     return (    
         <div>   
             <div><Sidebar /></div>

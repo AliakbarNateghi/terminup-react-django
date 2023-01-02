@@ -32,31 +32,8 @@ const HomePage = () => {
   
   let tempUser = jwt_decode(localStorage.getItem('authTokens'))
   let user_id = tempUser.user_id
-  // console.log('tempUser :', tempUser);
-  // console.log('user_id :', user_id);
-  
-  // setUserinfo(jwt_decode(tempUser))
-
 
   let choosedCollege = []
-
-  function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-  }
-
-  let csrftoken = getCookie('csrftoken');
 
   const onload = (e) => {
       e.preventDefault();
@@ -64,19 +41,6 @@ const HomePage = () => {
 
   const fetchData = async () => {
       try {
-
-          // const userResult = await axios.get('http://127.0.0.1:8000/api/token/', {
-          //   method: 'GET',
-          //   headers: {
-          //       'Content-Type': 'application/json',
-          //       'Authorization': 'Bearer ' + String(authTokens.access)
-          //   }
-          // });
-          // if(userResult.status === 200) {
-          //   setUserinfo(jwt_decode(userResult.data.access))
-          // } else if(userResult.statusText === 'Unauthorized') {
-          //   logoutUser();
-          // }
 
           const collegeResult = await axios.get('http://127.0.0.1:8000/api/college/', {
             method: 'GET',
@@ -88,7 +52,7 @@ const HomePage = () => {
           if(collegeResult.status === 200) {
             setCollege(collegeResult.data);
           } else if(collegeResult.statusText === 'Unauthorized') { 
-            logoutUser();
+            // logoutUser();
           }
 
           const courseResult = await axios.get('http://127.0.0.1:8000/api/course/', {
@@ -101,7 +65,7 @@ const HomePage = () => {
           if(courseResult.status === 200) {
             setCourse(courseResult.data);
           } else if(courseResult.statusText === 'Unauthorized') { 
-            logoutUser();
+            // logoutUser();
           }
 
           const wsResult = await axios.get('http://127.0.0.1:8000/api/ws-list/', {
@@ -114,7 +78,7 @@ const HomePage = () => {
           if(wsResult.status === 200) {
             setWs(wsResult.data);
           } else if(wsResult.statusText === 'Unauthorized') { 
-            logoutUser();
+            // logoutUser();
           }
 
           const edResult = await axios.get('http://127.0.0.1:8000/api/ed-list/', {
@@ -127,7 +91,7 @@ const HomePage = () => {
           if(edResult.status === 200) {
             setEd(edResult.data);
           } else if(edResult.statusText === 'Unauthorized') { 
-            logoutUser();
+            // logoutUser();
           }
           
           const choiseResult = await axios.get('http://127.0.0.1:8000/api/choise/', {
@@ -142,7 +106,7 @@ const HomePage = () => {
             setStudentChoise(choiseResult.data)
       
           } else if(choiseResult.statusText === 'Unauthorized') { 
-            logoutUser();
+            // logoutUser();
           }
 
       } catch (err) {
@@ -168,8 +132,8 @@ const HomePage = () => {
   }
 
   const CourseClick = async (event) => {
-    // event.preventDefault()
-    // console.log('event :', event);
+    event.color = '#CFE8A9';
+    setCourseChoised([...courseChoised, event]);
 
     let response = await fetch('http://127.0.0.1:8000/api/choise/', {
       method: 'POST',
@@ -182,16 +146,16 @@ const HomePage = () => {
         'course': event.id,
       })
     })
-    window.location.reload()
+    // window.location.reload()
 
     const data = await response.json();
 
-    // if(response.status === 200) {
-    //   alert('Added')
-    // } else {
-    //   alert('Sth went wrong');
-    //   console.log(response)
-    // }
+    if(response.status === 200) {
+      console.log('Added')
+    } else {
+      console.log('Sth went wrong');
+      console.log(response)
+    }
 
   }
 
@@ -224,21 +188,25 @@ const HomePage = () => {
     setStudentChoise(studentChoise.filter((course) => course.id !== event.id))
     setDeleteChoised(deleteChoised.filter((course) => course.id !== event.id))
 
-    console.log('event :', event);
+    // console.log('event :', event);
 
-    let response = await fetch('http://127.0.0.1:8000/api/choise/' + `${event.id}` + '/delete/', {
+    let response = await fetch(`http://127.0.0.1:8000/api/choise/${event.id}/` , {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',
-        'Autorization': 'Bearer ' + String(authTokens.access),
+        'Authorization': 'Bearer ' + String(authTokens.access),
       },
-      // body: JSON.stringify({
-      //   'student': user_id,
-      //   'course': event.id,
-      // })
     });
 
-    window.location.reload();
+    if(response.status === 200) {
+      console.log('Deleted');
+    } else {
+      console.log('Sth went wrong');
+      console.log(response);
+    }
+
+
+    // window.location.reload();
 
     const data = await response.json();
   }
@@ -281,7 +249,7 @@ const HomePage = () => {
     for(let i in course) {
       if(course[i].id == courseItem.course) {
         value = course[i].id
-        id = course[i].id
+        id = courseItem.id
         label = course[i].title
         title = course[i].title
         college = course[i].college
@@ -328,7 +296,7 @@ const HomePage = () => {
       user: user,
       ws: wsId,
       examDate: examDate,
-      proffesor: professor,
+      professor: professor,
       unit: unit,
       group: group,
       code: code,
@@ -464,12 +432,12 @@ const HomePage = () => {
         <Hours />
         <div style={divStyle}>  
             <Days />
-            {/* {courseChoised.map(courseItem => <Square key={courseItem.id}
+            {courseChoised.map(courseItem => <Square key={courseItem.id}
                                                      course={courseItem}
                                                      backgroundColor={courseItem.color}
                                                      onMouseOverFa={() => onMouseOverDelete(courseItem)}
                                                      onClickFa={() => deleteCourse(courseItem)}
-                                                     onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)} */}
+                                                     onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
             
             {chosenCourse.map(courseItem => courseItem.user === user_id ? <Square key={courseItem.id}
                                                     course={courseItem}
@@ -523,20 +491,10 @@ const HomePage = () => {
         <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
         
         <p>
-          {courseChoised.length > 0 || chosenCourse.length > 0 ? ':کلاس های انتخاب شده' : ''}
+          {courseChoised.length > 0  ? ':کلاس های انتخاب شده' : ''}
         </p>
         
         <div style={{overflow: 'scroll', height: '200px'}}>
-          {/* {courseChoised.map((courseItem) => 
-            <Button key={courseItem.id}
-              text={courseItem.title}
-              onClick={() => deleteCourse(courseItem)}
-              onMouseOver={() => onMouseOverDelete(courseItem)}
-              onMouseOut={() => onMouseOutDelete(courseItem)}
-              color={'#E64848'}
-            />
-          )} */}
-
           {chosenCourse.map((courseItem) => courseItem.user === user_id ?
             <Button key={courseItem.id}
               text={courseItem.title}
@@ -545,7 +503,17 @@ const HomePage = () => {
               onMouseOut={() => onMouseOutDelete(courseItem)}
               color={'#E64848'}
             />
-          : '' )}
+          : '')}
+
+          {courseChoised.map((courseItem) => 
+            <Button key={courseItem.id}
+              text={courseItem.title}
+              onClick={() => deleteCourse(courseItem)}
+              onMouseOver={() => onMouseOverDelete(courseItem)}
+              onMouseOut={() => onMouseOutDelete(courseItem)}
+              color={'#E64848'}
+            />
+          )}
         </div>
       </div>
 
