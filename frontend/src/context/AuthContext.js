@@ -6,10 +6,6 @@ const AuthContext = createContext()
 
 export default AuthContext;
 
-// export default useAuth = () => {
-//     return useContext(AuthContext)
-// }
-
 export const AuthProvider = ({ children }) => {
     const [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
     const [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
@@ -37,27 +33,31 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('authTokens', JSON.stringify(data))
             navigate.push('/')
             window.location.reload()
+            // console.log(jwt_decode(localStorage.getItem('authTokens')).user_id)
         } else {
-            alert('Something went wrong!')
+            // console.log('STH went wrong!!!')
         }
     }
 
-    const registerUser = async (username, password, password2) => {
+    const registerUser = async (e) => {
+        e.preventDefault();
         const response = await fetch("http://127.0.0.1:8000/api/register/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            username,
-            password,
-            password2
+            'username': e.target.username.value,
+            'password': e.target.password.value,
+            'password2': e.target.password2.value,
         })
         });
         if (response.status === 201) {
-        navigate.push("/login");
+            navigate.push("/login");
+            window.location.reload();
         } else {
-        alert("Something went wrong!");
+            // console.log("Something went wrong!");
+            // console.log('response :', response);
         }
     };
 
@@ -67,6 +67,7 @@ export const AuthProvider = ({ children }) => {
         setUser(null)
         localStorage.removeItem('authTokens')
         navigate.push('/login')
+        window.location.reload();
     }
 
 
@@ -87,8 +88,8 @@ export const AuthProvider = ({ children }) => {
             setUser(jwt_decode(data.access))
             localStorage.setItem('authTokens', JSON.stringify(data))
         }else{
-            console.log('logged out !!!')
-            logoutUser()
+            // console.log('logged out !!!')
+            // logoutUser()
         }
 
         if(loading){
