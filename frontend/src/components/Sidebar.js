@@ -7,15 +7,14 @@ import { AuthProvider } from '../context/AuthContext';
 
 // let Logout = AuthProvider.
 
-const HomeRedirect = () => {
-  let navigate = useHistory()
-  navigate.push('/donate');
-  window.location.reload();
-  // return (<Redirect to='/donate' />)
-  // window.location.reload()
-}
-
 export default props => {
+
+  const HomeRedirect = () => {
+    let navigate = useHistory()
+    navigate.push('/donate');
+    window.location.reload();
+  }
+
   return (
     
     <Menu>
