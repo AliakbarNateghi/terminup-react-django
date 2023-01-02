@@ -10,9 +10,7 @@ import Additional from "../components/additional";
 import AuthContext from "../context/AuthContext";
 import Select from 'react-select';
 import jwt_decode from "jwt-decode";
-// import API from './apis/studentChoiseAPI'
 
-// console.log('API :', API);
 
 
 const HomePage = () => {
@@ -146,7 +144,7 @@ const HomePage = () => {
         'course': event.id,
       })
     })
-    // window.location.reload()
+    window.location.reload()
 
     const data = await response.json();
 
@@ -206,7 +204,7 @@ const HomePage = () => {
     }
 
 
-    // window.location.reload();
+    window.location.reload();
 
     const data = await response.json();
   }
@@ -407,7 +405,9 @@ const HomePage = () => {
     float:'right',
     lineHeight:'350%',
     marginRight: '0.5%',
+    // marginLeft: '0.5%',
     border: '1px solid #373a47',
+    borderRadius: '2px',
     width:'75%',
     height: '800px',
     textAlign: 'right'}

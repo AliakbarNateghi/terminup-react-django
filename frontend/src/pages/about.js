@@ -1,7 +1,7 @@
 import React, { Component }  from 'react';
 import { useState, useEffect} from "react";
 import PropTypes from 'prop-types'
-import { Outlet, Link, Route, Routes, Router, BrowserRouter } from "react-router-dom";
+import { useHistory, Link, Route, Routes, Router, BrowserRouter } from "react-router-dom";
 import { AiFillCaretLeft } from "react-icons/all";
 import '../App.css'
 import { AiFillGithub } from 'react-icons/ai'
@@ -12,7 +12,12 @@ import Sidebar from '../components/Sidebar';
 
 const About = () => {
 
-    // window.location.reload()
+    const navigate = useHistory();
+
+    const donateRedirect = () => {
+        navigate.push('/donate');
+        window.location.reload()
+    }
 
     return (    
         <div>   
@@ -32,7 +37,7 @@ const About = () => {
                 <h1 className='font-face-gm'>اگر رشته یا دانشگاهت تو سیستم نیست حتما بهم اطلاع بده تا سایت رو آپدیت کنم + </h1>
                 <h1 className='font-face-gm'>راستی از لینک زیر میتونی یه کافه مهمونم کنی یه دلگرمی بزرگ + </h1>
                 <span style={{fontSize: '25px'}}></span>
-                <Link to='/donate'><button className='btn' style={{backgroundColor: '#DA291C', color: 'white'}}>DONATE</button></Link>
+                <button onClick={donateRedirect} className='btn' style={{backgroundColor: '#DA291C', color: 'white'}}>DONATE</button>
                 <br></br><br></br><br></br>
                 <h1 className='font-face-gm'>راه های ارتباط با من + </h1>
                 <a href='https://github.com/AliakbarNateghi/'>
@@ -41,11 +46,11 @@ const About = () => {
                 <a href='https://api.whatsapp.com/send?phone=989309096215'>
                     <IoLogoWhatsapp style={{fontSize : '70px', color: '#128C7E'}} />
                 </a>
-                <a href='https://t.me/Aliakbar_Nateghi'>
-                    {/* <BsTelegram style={{fontSize : '70px', color: '#0088cc'}} /> */}
-                </a>
                 <a href='mailto:lkbrntgh@gmail.com?subject = Feedback&body = Message'>
                     <SiGmail style={{fontSize : '70px', color: '#c71610'}} />
+                </a>
+                <a href='https://t.me/Aliakbar_Nateghi'>
+                    <i className='fa fa-telegram' style={{fontSize : '70px', color: '#0088cc'}} ></i>
                 </a>
             </div>  
         </div>
