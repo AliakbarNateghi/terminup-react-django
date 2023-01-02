@@ -1,9 +1,8 @@
 from django.http import JsonResponse
-from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework import status
+from rest_framework import status, generics, viewsets, permissions
 from .serializers import (courseSerializer,
                           collegeSerializer,
                           wsSerializer,
@@ -19,27 +18,77 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from serializers import *
-from rest_framework import generics
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import DeleteView 
 
 
 @api_view(['GET'])
 def apiOverview(request):
     api_urls = {
         'users': '/users',
-        'List': '/course-list',
-        'college': '/college-list',
+        # 'List': '/course-list',
+        # 'college': '/college-list',
         'ws': '/ws-list',
-        'Detail View': '/course-detail/<str:pk>/',
-        'courseCreate': '/course-create/',
+        # 'Detail View': '/course-detail/<str:pk>/',
+        # 'courseCreate': '/course-create/',
         'userCreate': '/user-create/',
-        'courseUpdate': '/course-update/<str:pk>/',
-        'courseDelete': '/course-delete/<str:pk>/',
-        'studentChoise': '/student-choise/<str:pk>/',
+        # 'courseUpdate': '/course-update/<str:pk>/',
+        # 'courseDelete': '/course-delete/<str:pk>/',
+        # 'studentChoise': '/student-choise/<str:pk>/',
+        # 'studentPost': '/student-post/',
         'token': '/token',
         'token-refresh': '/token/refresh',
+        'course': '/course',
+        'college': '/college',
+        'choise': 'choise/',
+        # 'delete': '/delete/<str:pk>/',
     }
 
     return Response(api_urls)
+
+class courseViewSet(viewsets.ModelViewSet):
+    serializer_class = courseSerializer
+    queryset = course.objects.all()
+
+
+class collegeViewSet(viewsets.ModelViewSet):
+    serializer_class = collegeSerializer
+    queryset = College.objects.all()
+
+
+class studentChoiseViewSet(viewsets.ModelViewSet):
+    serializer_class = choiseSerializer
+    queryset = studentChoise.objects.all()
+    permission_classes = (IsAuthenticated, )
+    http_method_names = ['delete', 'post', 'get', 'options', ]
+
+    def destroy(self, request, pk=None, *args, **kwargs):
+        instance = self.get_object()
+        return super(studentChoiseViewSet, self).destroy(request, pk, *args, **kwargs)
+
+    # def destroy(self, request, pk=None):
+    #     id = pk
+    #     choise = self.queryset.filter(
+    #         id = self.id
+    #     )
+    #     choise.delete()
+
+
+# @api_view(['DELETE'])
+# def deleteChoise(request, pk):
+#     choise = studentChoise.objects.get(id=pk)
+#     choise.delete()
+
+#     return Response('Deleted')
+
+
+
+# class collegeViewSet(viewsets.ModelViewSet):
+#     serializer_class = collegeSerializer
+#     queryset = College.objects.all()
+
+
+
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -71,24 +120,24 @@ def users(request):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
-def courseList(request):
-    courses = course.objects.all().order_by('-id')
-    serializer = courseSerializer(courses, many=True)
-    return Response(serializer.data)
+# @api_view(['GET'])
+# def courseList(request):
+#     courses = course.objects.all().order_by('-id')
+#     serializer = courseSerializer(courses, many=True)
+#     return Response(serializer.data)
 
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def StudentChoise(request):
-    choises = studentChoise.objects.all().order_by('-id')
-    serializer = choiseSerializer(choises, many=True)
-    return Response(serializer.data)
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# def StudentChoise(request):
+#     choises = studentChoise.objects.all().order_by('-id')
+#     serializer = choiseSerializer(choises, many=True)
+#     return Response(serializer.data)
 
 
 # @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
-# def student_choise(request):
+# def studentPost(request):
 #     serializer = choiseSerializer(data=request.data)
 
 #     if serializer.is_valid():
@@ -97,11 +146,11 @@ def StudentChoise(request):
 #     return Response(serializer.data)
 
 
-@api_view(['GET'])
-def collegeList(request):
-    colleges = College.objects.all().order_by('-id')
-    serializer = collegeSerializer(colleges, many=True)
-    return Response(serializer.data)
+# @api_view(['GET'])
+# def collegeList(request):
+#     colleges = College.objects.all().order_by('-id')
+#     serializer = collegeSerializer(colleges, many=True)
+#     return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -118,21 +167,21 @@ def edList(request):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
-def courseDetail(request, pk):
-    courses = course.objects.get(id=pk)
-    serializer = courseSerializer(courses, many=False)
-    return Response(serializer.data)
+# @api_view(['GET'])
+# def courseDetail(request, pk):
+#     courses = course.objects.get(id=pk)
+#     serializer = courseSerializer(courses, many=False)
+#     return Response(serializer.data)
 
 
-@api_view(['POST'])
-def courseCreate(request):
-    serializer = choiseSerializer(data=request.data)
+# @api_view(['POST'])
+# def courseCreate(request):
+#     serializer = choiseSerializer(data=request.data)
 
-    if serializer.is_valid():
-        serializer.save()
+#     if serializer.is_valid():
+#         serializer.save()
 
-    return Response(serializer.data)
+#     return Response(serializer.data)
 
 
 @api_view(['POST'])
@@ -148,15 +197,15 @@ def userCreate(request):
     return Response(serializer.data)
 
 
-@api_view(['POST'])
-def courseUpdate(request, pk):
-    courses = course.objects.get(id=pk)
-    serializer = courseSerializer(instance=courses, data=request.data)
+# @api_view(['POST'])
+# def courseUpdate(request, pk):
+#     courses = course.objects.get(id=pk)
+#     serializer = courseSerializer(instance=courses, data=request.data)
 
-    if serializer.is_valid():
-        serializer.save()
+#     if serializer.is_valid():
+#         serializer.save()
 
-    return Response(serializer.data)
+#     return Response(serializer.data)
 
 
 @api_view(['DELETE'])
