@@ -1,39 +1,52 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { elastic as Menu } from 'react-burger-menu';
 import '../Sidebar.css';
-import About from '../pages/about';
 import { Link, Route, BrowserRouter, useHistory, Redirect } from "react-router-dom";
-import { AuthProvider } from '../context/AuthContext';
+import AutContext from '../context/AuthContext';
 
-// let Logout = AuthProvider.
 
 export default props => {
 
+  const navigate = useHistory();
+
+  let { logoutUser } = useContext(AutContext)
+
   const HomeRedirect = () => {
-    let navigate = useHistory()
+    navigate.push('/');
+    window.location.reload();
+  }
+
+  const donateRedirect = () => {
     navigate.push('/donate');
     window.location.reload();
+  }
+
+  const aboutRedirect = () => {
+    navigate.push('/about');
+    window.location.reload();
+  }
+
+  const customStyle = {
+    cursor: 'pointer',
   }
 
   return (
     
     <Menu>
-      {/* <div>
-        <p onClick={HomeRedirect} >Home</p>
-      </div> */}
-      <Link to='/'>
+      
+      <p onClick={HomeRedirect} style={customStyle}>
         صفحه اصلی
-      </Link>
-      <Link to='/save'>
-        ذخیره برنامه
-      </Link>
-      <p onClick={HomeRedirect}>
-        ساپورت مالی
       </p>
-      <Link to="/about">
+  
+      <p onClick={ donateRedirect } style={customStyle}>
+        برام قهوه بخر
+      </p>
+
+      <p onClick={ aboutRedirect } style={customStyle}>
         درباره من
-      </Link>
-      <p>
+      </p>
+
+      <p onClick={ logoutUser } style={customStyle}>
         خروج
       </p>
     </Menu>
