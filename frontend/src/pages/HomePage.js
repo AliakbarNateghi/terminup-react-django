@@ -130,30 +130,45 @@ const HomePage = () => {
   }
 
   const CourseClick = async (event) => {
-    event.color = '#CFE8A9';
-    setCourseChoised([...courseChoised, event]);
+    // event.color = '#CFE8A9';
+    // setCourseChoised([...courseChoised, event]);
 
-    let response = await fetch('http://127.0.0.1:8000/api/choise/', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + String(authTokens.access)
-      },
-      body: JSON.stringify({
-        'student': user_id,
-        'course': event.id,
-      })
-    })
+    function search(e, userId) {
+      find : {
+        for (let i in studentChoise) {
+          if (userId === studentChoise[i].student && e.id === studentChoise[i].course) {
+            alert('قبلا این درسو انتخاب کردی');
+            break find;
+          }
+        }
+          fetch('http://127.0.0.1:8000/api/choise/', {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json',
+              'Authorization': 'Bearer ' + String(authTokens.access)
+            },
+            body: JSON.stringify({
+              'student': user_id,
+              'course': event.id,
+            })
+          })
+      }
+    }
+
+    search(event, user_id)
+
     window.location.reload()
 
-    const data = await response.json();
+    // let response = await 
 
-    if(response.status === 200) {
-      console.log('Added')
-    } else {
-      console.log('Sth went wrong');
-      console.log(response)
-    }
+    // const data = await response.json();
+
+    // if(response.status === 200) {
+    //   console.log('Added')
+    // } else {
+    //   console.log('Sth went wrong');
+    //   console.log(response)
+    // }
 
   }
 
@@ -182,9 +197,9 @@ const HomePage = () => {
 
   const deleteCourse = async (event) => {
     event.color = 'white';
-    setCourseChoised(courseChoised.filter((course) => course.id !== event.id))
-    setStudentChoise(studentChoise.filter((course) => course.id !== event.id))
-    setDeleteChoised(deleteChoised.filter((course) => course.id !== event.id))
+    // setCourseChoised(courseChoised.filter((course) => course.id !== event.id))
+    // setStudentChoise(studentChoise.filter((course) => course.id !== event.id))
+    // setDeleteChoised(deleteChoised.filter((course) => course.id !== event.id))
 
     // console.log('event :', event);
 
