@@ -12,10 +12,11 @@ const Border = () => {
     }
 
     const liStyle = {
+
     }
 
     const dividerStyle = {
-        paddingTop: '0.55%', 
+        paddingTop: '0.5%',
     }
 
     return (
