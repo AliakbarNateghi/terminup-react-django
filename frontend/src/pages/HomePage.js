@@ -10,7 +10,10 @@ import Additional from "../components/additional";
 import AuthContext from "../context/AuthContext";
 import Select from 'react-select';
 import jwt_decode from "jwt-decode";
-
+import { useAlert } from 'react-alert';
+// import alertify from 'alertifyjs';
+// import '../../node_modules/alertifyjs/build/css/alertify.css';
+import Alert from 'react-bootstrap/Alert'
 
 
 const HomePage = () => {
@@ -27,6 +30,8 @@ const HomePage = () => {
   const [deleteChoised, setDeleteChoised] = useState([])
   const [boolean, setBoolean] = useState(false)
   const [studentChoise, setStudentChoise] = useState([])
+
+  const alert = useAlert();
   
   let tempUser = jwt_decode(localStorage.getItem('authTokens'))
   let user_id = tempUser.user_id
@@ -137,7 +142,16 @@ const HomePage = () => {
       find : {
         for (let i in studentChoise) {
           if (userId === studentChoise[i].student && e.id === studentChoise[i].course) {
-            alert('قبلا این درسو انتخاب کردی');
+            // alertify.alert('قبلا این درسو انتخاب کردی');
+            // alertify.alert("قبلا این درسو انتخاب کردی", function(){
+            //   alertify.message('OK');
+            // });
+            // alert.show('!این درسو قبلا برداشتی')
+            return(
+              <Alert variant="danger">
+                <p>ok</p>
+              </Alert>
+            )
             break find;
           }
         }
