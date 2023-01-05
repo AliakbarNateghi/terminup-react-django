@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Additional = ({course, backgroundColor, boolean}) => {
 
   const liStyle = {
-    fontSize: '12px',
+    fontSize: '13px',
   }
 
   if(boolean === true) {
