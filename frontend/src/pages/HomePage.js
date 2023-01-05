@@ -10,10 +10,6 @@ import Additional from "../components/additional";
 import AuthContext from "../context/AuthContext";
 import Select from 'react-select';
 import jwt_decode from "jwt-decode";
-import { useAlert } from 'react-alert';
-// import alertify from 'alertifyjs';
-// import '../../node_modules/alertifyjs/build/css/alertify.css';
-import Alert from 'react-bootstrap/Alert'
 
 
 const HomePage = () => {
@@ -30,8 +26,6 @@ const HomePage = () => {
   const [deleteChoised, setDeleteChoised] = useState([])
   const [boolean, setBoolean] = useState(false)
   const [studentChoise, setStudentChoise] = useState([])
-
-  const alert = useAlert();
   
   let tempUser = jwt_decode(localStorage.getItem('authTokens'))
   let user_id = tempUser.user_id
@@ -135,23 +129,19 @@ const HomePage = () => {
   }
 
   const CourseClick = async (event) => {
-    // event.color = '#CFE8A9';
+    event.color = '#CFE8A9';
     // setCourseChoised([...courseChoised, event]);
 
     function search(e, userId) {
+      let newChoise = { course: e.id,
+                        student: userId}
+
+      // setStudentChoise([...studentChoise, newChoise])
+
       find : {
         for (let i in studentChoise) {
           if (userId === studentChoise[i].student && e.id === studentChoise[i].course) {
-            // alertify.alert('قبلا این درسو انتخاب کردی');
-            // alertify.alert("قبلا این درسو انتخاب کردی", function(){
-            //   alertify.message('OK');
-            // });
-            // alert.show('!این درسو قبلا برداشتی')
-            return(
-              <Alert variant="danger">
-                <p>ok</p>
-              </Alert>
-            )
+            alert('قبلا این درسو انتخاب کردی');
             break find;
           }
         }
@@ -162,18 +152,17 @@ const HomePage = () => {
               'Authorization': 'Bearer ' + String(authTokens.access)
             },
             body: JSON.stringify({
-              'student': user_id,
-              'course': event.id,
+              'student': userId,
+              'course': e.id,
             })
-          })
+          }).then( 
+            setStudentChoise([...studentChoise, newChoise])
+            // fetchData()
+          )
       }
     }
 
     search(event, user_id)
-
-    window.location.reload()
-
-    // let response = await 
 
     // const data = await response.json();
 
@@ -209,33 +198,27 @@ const HomePage = () => {
     setDeleteChoised(deleteChoised.filter((course) => course.id !== event.id))
   }
 
-  const deleteCourse = async (event) => {
-    event.color = 'white';
-    // setCourseChoised(courseChoised.filter((course) => course.id !== event.id))
+  const deleteCourse = (event) => {
+
+    // event.color = 'white';
+
     // setStudentChoise(studentChoise.filter((course) => course.id !== event.id))
-    // setDeleteChoised(deleteChoised.filter((course) => course.id !== event.id))
 
-    // console.log('event :', event);
-
-    let response = await fetch(`http://127.0.0.1:8000/api/choise/${event.id}/` , {
+    fetch(`http://127.0.0.1:8000/api/choise/${event.id}/` , {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',
         'Authorization': 'Bearer ' + String(authTokens.access),
       },
-    });
+    })
+    .then(
+      setDeleteChoised(deleteChoised.filter((course) => course.id !== event.id))
+    )
+    .then(fetchData)
+    // .then(
+    //   setStudentChoise(studentChoise.filter((course) => course.id !== event.id))
+    // )
 
-    if(response.status === 200) {
-      console.log('Deleted');
-    } else {
-      console.log('Sth went wrong');
-      console.log(response);
-    }
-
-
-    window.location.reload();
-
-    const data = await response.json();
   }
 
   
@@ -349,7 +332,6 @@ const HomePage = () => {
 
   })
 
-
   let courseOptions = choised.map( function (courseItem) {
 
     let wsId;
@@ -461,12 +443,12 @@ const HomePage = () => {
         <Hours />
         <div style={divStyle}>  
             <Days />
-            {courseChoised.map(courseItem => <Square key={courseItem.id}
+            {/* {courseChoised.map(courseItem => <Square key={courseItem.id}
                                                      course={courseItem}
                                                      backgroundColor={courseItem.color}
                                                      onMouseOverFa={() => onMouseOverDelete(courseItem)}
                                                      onClickFa={() => deleteCourse(courseItem)}
-                                                     onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)}
+                                                     onMouseOutFa={() => onMouseOutDelete(courseItem)}/>)} */}
             
             {chosenCourse.map(courseItem => courseItem.user === user_id ? <Square key={courseItem.id}
                                                     course={courseItem}
@@ -478,9 +460,6 @@ const HomePage = () => {
             {temporaryChoised.map(courseItem => <Square key={courseItem.id}
                                                         course={courseItem}
                                                         backgroundColor={courseItem.color}
-                                                        // onMouseOverFa={() => onMouseOverDelete(courseItem)}
-                                                        // onClickFa={() => deleteCourse(courseItem)}
-                                                        // onMouseOutFa={() => onMouseOutDelete(courseItem)}
                                                 />)}
 
             {deleteChoised.map(courseItem => <Square key={courseItem.id}
@@ -518,6 +497,7 @@ const HomePage = () => {
         </div>
 
         <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+        {/* <br></br><br></br> */}
         
         <p>
           {courseChoised.length > 0  ? ':کلاس های انتخاب شده' : ''}
@@ -534,7 +514,7 @@ const HomePage = () => {
             />
           : '')}
 
-          {courseChoised.map((courseItem) => 
+          {/* {courseChoised.map((courseItem) => 
             <Button key={courseItem.id}
               text={courseItem.title}
               onClick={() => deleteCourse(courseItem)}
@@ -542,7 +522,7 @@ const HomePage = () => {
               onMouseOut={() => onMouseOutDelete(courseItem)}
               color={'#E64848'}
             />
-          )}
+          )} */}
         </div>
       </div>
 
